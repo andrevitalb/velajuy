@@ -1,0 +1,15 @@
+import { integer, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core"
+import { products } from "./products"
+
+export const productImages = pgTable("product_images", {
+	id: uuid("id").primaryKey().defaultRandom(),
+	productId: uuid("product_id")
+		.notNull()
+		.references(() => products.id, { onDelete: "cascade" }),
+	url: text("url").notNull(),
+	altText: text("alt_text"),
+	sortOrder: integer("sort_order").notNull().default(0),
+	width: integer("width"),
+	height: integer("height"),
+	createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+})
