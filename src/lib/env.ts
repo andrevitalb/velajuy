@@ -1,3 +1,4 @@
+// Validates at module load. Tests must use vi.resetModules() to re-trigger.
 import { z } from "zod"
 
 const schema = z.object({
