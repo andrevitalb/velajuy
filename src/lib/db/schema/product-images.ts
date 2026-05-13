@@ -13,3 +13,6 @@ export const productImages = pgTable("product_images", {
 	height: integer("height"),
 	createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
 })
+
+export type ProductImage = typeof productImages.$inferSelect
+export type NewProductImage = typeof productImages.$inferInsert

@@ -1,12 +1,4 @@
-import {
-	bigint,
-	integer,
-	pgEnum,
-	pgTable,
-	text,
-	timestamp,
-	uuid,
-} from "drizzle-orm/pg-core"
+import { bigint, integer, pgEnum, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core"
 
 export const productStatus = pgEnum("product_status", ["draft", "active", "archived"])
 
