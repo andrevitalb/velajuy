@@ -9,6 +9,7 @@ export const auth = betterAuth({
 	database: drizzleAdapter(db, {
 		provider: "pg",
 		usePlural: true,
+		// usePlural alone misses "verifications" in our schema — explicit map required.
 		schema: {
 			users,
 			sessions,
