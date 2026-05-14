@@ -5,7 +5,7 @@ Custom e-commerce for Velajuy Pelucas (Colombia). Single Next.js 16 app — stor
 ## Quick start
 
     pnpm install
-    cp .env.example .env.development
+    cp .env.example .env.local
     pnpm db:migrate
     pnpm db:seed
     pnpm dev

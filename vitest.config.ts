@@ -2,7 +2,7 @@ import path from "node:path"
 import dotenv from "dotenv"
 import { defineConfig } from "vitest/config"
 
-const loaded = dotenv.config({ path: ".env.development" }).parsed ?? {}
+const loaded = dotenv.config({ path: ".env.local" }).parsed ?? {}
 
 export default defineConfig({
 	test: {
