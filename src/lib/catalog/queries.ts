@@ -3,6 +3,7 @@ import { db } from "@/lib/db"
 import {
 	attributes,
 	attributeValues,
+	pages,
 	productAttributeValues,
 	productImages,
 	products,
@@ -100,6 +101,16 @@ export async function listProducts(filters: CatalogFilters): Promise<ProductCard
 		stockQuantity: r.stockQuantity,
 		primaryImageUrl: r.imageUrl,
 	}))
+}
+
+export async function getPagesBySlugs(slugs: string[]): Promise<Record<string, string>> {
+	if (slugs.length === 0) return {}
+	const rows = await db.select().from(pages).where(inArray(pages.slug, slugs))
+	const out: Record<string, string> = {}
+	for (const r of rows) {
+		out[r.slug] = typeof r.body === "string" ? r.body : JSON.stringify(r.body ?? "")
+	}
+	return out
 }
 
 export async function listAttributeFacets(): Promise<AttributeFacet[]> {
