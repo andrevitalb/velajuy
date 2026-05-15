@@ -3,6 +3,7 @@ import { notFound } from "next/navigation"
 import { auth } from "@/lib/auth"
 import { getPagesBySlugs, getProductBySlug, listRelated } from "@/lib/catalog/queries"
 import { isInWishlist } from "@/lib/wishlist/queries"
+import { BackInStockForm } from "./back-in-stock-form"
 import { ProductGallery } from "./gallery"
 import { ProductInfo } from "./product-info"
 import { ProductTabs } from "./product-tabs"
@@ -88,7 +89,9 @@ export default async function ProductoPage({ params }: { params: Promise<{ slug:
 							isAuthenticated={!!userId}
 						/>
 					}
-					backInStockSlot={null}
+					backInStockSlot={
+						<BackInStockForm productId={product.id} defaultEmail={session?.user.email ?? null} />
+					}
 				/>
 			</div>
 
