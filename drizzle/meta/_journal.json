@@ -8,6 +8,13 @@
       "when": 1778699420584,
       "tag": "0000_tricky_strong_guy",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1778816093348,
+      "tag": "0001_omniscient_sentry",
+      "breakpoints": true
     }
   ]
 }

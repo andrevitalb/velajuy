@@ -1,4 +1,4 @@
-import { index, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core"
+import { index, pgTable, text, timestamp, uniqueIndex, uuid } from "drizzle-orm/pg-core"
 import { products } from "./products"
 import { users } from "./users"
 
@@ -18,6 +18,10 @@ export const backInStockSubscriptions = pgTable(
 	(t) => ({
 		byProduct: index("back_in_stock_subscriptions_product_idx").on(t.productId),
 		byEmail: index("back_in_stock_subscriptions_email_idx").on(t.email),
+		productEmailIdx: uniqueIndex("back_in_stock_subscriptions_product_email_idx").on(
+			t.productId,
+			t.email,
+		),
 	}),
 )
 
