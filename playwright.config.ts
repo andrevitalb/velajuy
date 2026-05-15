@@ -1,4 +1,9 @@
 import { defineConfig, devices } from "@playwright/test"
+import dotenv from "dotenv"
+
+// Load env so the test runner (which talks to Postgres directly for the
+// loginAsOwner helper) can read DATABASE_URL and BETTER_AUTH_SECRET.
+dotenv.config({ path: ".env.local" })
 
 export default defineConfig({
 	testDir: "./tests/e2e",
