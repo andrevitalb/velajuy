@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+@theme {
+	--color-velajuy-pink: #f4b6c2;
+	--color-velajuy-pink-soft: #fde2ea;
+	--color-velajuy-pink-bg: #fff5f8;
+	--color-velajuy-wine: #5c1a2a;
+	--color-velajuy-wine-soft: #7a3d4d;
+	--color-velajuy-cream: #fffaf5;
+
+	--font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
