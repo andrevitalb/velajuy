@@ -9,7 +9,7 @@ export function ProductCard({ product }: { product: ProductCardData }) {
 	const href = `/producto/${product.slug}` as Route
 	return (
 		<article className="group rounded-2xl bg-white p-3 shadow-sm transition hover:shadow-md">
-			<Link href={href} className="block overflow-hidden rounded-xl">
+			<Link href={href} scroll={false} className="block overflow-hidden rounded-xl">
 				<div className="relative aspect-square bg-velajuy-pink-soft">
 					{product.primaryImageUrl ? (
 						<Image
@@ -24,7 +24,7 @@ export function ProductCard({ product }: { product: ProductCardData }) {
 			</Link>
 			<div className="mt-3 flex items-start justify-between gap-2">
 				<div>
-					<Link href={href} className="text-sm font-medium text-velajuy-wine">
+					<Link href={href} scroll={false} className="text-sm font-medium text-velajuy-wine">
 						{product.name}
 					</Link>
 					<Price
@@ -34,21 +34,6 @@ export function ProductCard({ product }: { product: ProductCardData }) {
 					/>
 				</div>
 				<StockBadge stock={product.stockQuantity} />
-			</div>
-			<div className="mt-3 flex gap-2">
-				<Link
-					href={`/catalogo?quick=${product.slug}` as Route}
-					scroll={false}
-					className="flex-1 rounded-lg bg-velajuy-pink-soft px-3 py-2 text-center text-xs font-medium text-velajuy-wine"
-				>
-					Vista rápida
-				</Link>
-				<Link
-					href={href}
-					className="flex-1 rounded-lg bg-velajuy-wine px-3 py-2 text-center text-xs font-medium text-white"
-				>
-					Ver
-				</Link>
 			</div>
 		</article>
 	)
