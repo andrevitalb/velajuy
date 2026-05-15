@@ -1,9 +1,13 @@
+import { headers } from "next/headers"
 import { notFound } from "next/navigation"
+import { auth } from "@/lib/auth"
 import { getPagesBySlugs, getProductBySlug, listRelated } from "@/lib/catalog/queries"
+import { isInWishlist } from "@/lib/wishlist/queries"
 import { ProductGallery } from "./gallery"
 import { ProductInfo } from "./product-info"
 import { ProductTabs } from "./product-tabs"
 import { RelatedProducts } from "./related-products"
+import { WishlistButton } from "./wishlist-button"
 
 const TAB_PAGE_SLUGS = ["pdp-cuidado", "pdp-envio", "pdp-devoluciones"]
 
@@ -26,6 +30,10 @@ export default async function ProductoPage({ params }: { params: Promise<{ slug:
 	const { slug } = await params
 	const product = await getProductBySlug(slug)
 	if (!product) notFound()
+
+	const session = await auth.api.getSession({ headers: await headers() })
+	const userId = session?.user.id ?? null
+	const startingInWishlist = userId ? await isInWishlist(userId, product.id) : false
 
 	const [related, pageBodies] = await Promise.all([
 		listRelated(product.id, 4),
@@ -72,7 +80,14 @@ export default async function ProductoPage({ params }: { params: Promise<{ slug:
 						attrName: a.attrName,
 						valueName: a.valueName,
 					}))}
-					wishlistSlot={null}
+					wishlistSlot={
+						<WishlistButton
+							productId={product.id}
+							productSlug={product.slug}
+							initialInWishlist={startingInWishlist}
+							isAuthenticated={!!userId}
+						/>
+					}
 					backInStockSlot={null}
 				/>
 			</div>
