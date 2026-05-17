@@ -20,7 +20,9 @@ export async function AdminShell({ children }: { children: React.ReactNode }) {
 					</span>
 					<SignOutButton />
 				</header>
-				<main className="flex-1 p-8">{children}</main>
+				<main id="main" tabIndex={-1} className="flex-1 p-8 outline-none">
+					{children}
+				</main>
 			</div>
 		</div>
 	)
