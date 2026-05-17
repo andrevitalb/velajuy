@@ -14,9 +14,13 @@ const items: { href: Route; label: string }[] = [
 ]
 
 export function MobileNav() {
-	const [open, setOpen] = useState(false)
 	const pathname = usePathname()
-	useEffect(() => setOpen(false), [pathname])
+	const [open, setOpen] = useState(false)
+	const [lastPath, setLastPath] = useState(pathname)
+	if (pathname !== lastPath) {
+		setLastPath(pathname)
+		if (open) setOpen(false)
+	}
 	useEffect(() => {
 		function onKey(e: KeyboardEvent) {
 			if (e.key === "Escape") setOpen(false)
