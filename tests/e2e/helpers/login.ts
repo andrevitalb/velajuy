@@ -39,7 +39,7 @@ export async function loginAsOwner(context: BrowserContext, baseURL: string) {
 	const sql = postgres(databaseUrl, { prepare: false })
 	try {
 		const [owner] = await sql<{ id: string }[]>`
-			select id from users where email = 'andre.vital@metalab.com' limit 1
+			select id from users where email = 'andre@andrevital.com' limit 1
 		`
 		if (!owner) throw new Error("Owner not seeded — run pnpm db:seed")
 		// Clear any leftover wishlist rows so tests start from a known state.
