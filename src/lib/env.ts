@@ -7,6 +7,11 @@ const schema = z.object({
 	BETTER_AUTH_URL: z.url(),
 	NEXT_PUBLIC_APP_URL: z.url(),
 	NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
+	R2_ACCOUNT_ID: z.string().min(1),
+	R2_ACCESS_KEY_ID: z.string().min(1),
+	R2_SECRET_ACCESS_KEY: z.string().min(1),
+	R2_BUCKET: z.string().min(1),
+	R2_PUBLIC_URL: z.url(),
 	RESEND_API_KEY: z.string().optional(),
 	EMAIL_FROM: z.string().default("Velajuy <noreply@velajuy.com>"),
 })

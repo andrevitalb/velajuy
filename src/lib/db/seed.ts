@@ -1,6 +1,8 @@
-import { eq } from "drizzle-orm"
+import { and, eq } from "drizzle-orm"
+import { hashPassword } from "better-auth/crypto"
 import { db } from "@/lib/db"
 import {
+	accounts,
 	attributes,
 	attributeValues,
 	pages,
@@ -13,7 +15,7 @@ import {
 } from "@/lib/db/schema"
 import { slugify } from "@/lib/slug"
 
-const OWNER_EMAIL = process.env.SEED_OWNER_EMAIL ?? "andre.vital@metalab.com"
+const OWNER_EMAIL = process.env.SEED_OWNER_EMAIL ?? "andre@andrevital.com"
 
 async function upsertOwner() {
 	const existing = await db.select().from(users).where(eq(users.email, OWNER_EMAIL))
@@ -31,6 +33,32 @@ async function upsertOwner() {
 	} else {
 		console.log(`Owner exists: ${OWNER_EMAIL}`)
 	}
+}
+
+async function ensureOwnerPassword() {
+	const password = process.env.SEED_OWNER_PASSWORD
+	if (!password) return
+	const [u] = await db.select().from(users).where(eq(users.email, OWNER_EMAIL))
+	if (!u) {
+		console.log("Owner user not found, skipping password seed")
+		return
+	}
+	const existing = await db
+		.select()
+		.from(accounts)
+		.where(and(eq(accounts.userId, u.id), eq(accounts.providerId, "credential")))
+	if (existing.length > 0) {
+		console.log("Owner credential already present, skipping")
+		return
+	}
+	const hash = await hashPassword(password)
+	await db.insert(accounts).values({
+		userId: u.id,
+		providerId: "credential",
+		accountId: u.id,
+		password: hash,
+	})
+	console.log("Owner credential password set from SEED_OWNER_PASSWORD")
 }
 
 const SETTING_DEFAULTS: Record<string, unknown> = {
@@ -347,6 +375,7 @@ async function upsertPages() {
 
 async function main() {
 	await upsertOwner()
+	await ensureOwnerPassword()
 	await upsertSettings()
 	await upsertZones()
 	await upsertAttributes()

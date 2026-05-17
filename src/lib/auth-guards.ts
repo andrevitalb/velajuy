@@ -30,3 +30,23 @@ export async function requireAdmin(): Promise<AuthenticatedSession & { role: Adm
 	}
 	return { ...session, role: role as AdminRole }
 }
+
+/** Returns the session if the user has owner role; otherwise redirects. */
+export async function requireOwner(): Promise<AuthenticatedSession & { role: "owner" }> {
+	const requestHeaders = await headers()
+	const session = await auth.api.getSession({ headers: requestHeaders })
+	if (!session) redirect("/admin/ingresar" as Route)
+	const role = (session.user as { role?: string }).role
+	if (role !== "owner") redirect("/admin?error=forbidden" as Route)
+	return { ...session, role: "owner" }
+}
+
+/** Non-throwing role lookup for conditional UI. Returns "owner" | "staff" | null. */
+export async function getAdminRole(): Promise<"owner" | "staff" | null> {
+	const requestHeaders = await headers()
+	const session = await auth.api.getSession({ headers: requestHeaders })
+	if (!session) return null
+	const role = (session.user as { role?: string }).role
+	if (role === "owner" || role === "staff") return role
+	return null
+}

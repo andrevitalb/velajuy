@@ -1,9 +1,12 @@
+const HEART_SVG =
+	`<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5c1a2a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -4px; margin-right: 6px;"><path d="M20.42 4.58a5.4 5.4 0 0 0-7.65 0L12 5.34l-.77-.76a5.4 5.4 0 0 0-7.65 7.65l8.42 8.42 8.42-8.42a5.4 5.4 0 0 0 0-7.65z"/></svg>`.trim()
+
 export function magicLinkEmail({ url, email }: { url: string; email: string }) {
 	const subject = "Tu enlace para entrar a Velajuy"
 	const text = `Hola ${email},\n\nUsa este enlace para entrar a Velajuy:\n${url}\n\nEl enlace expira pronto. Si no fuiste tú, ignora este correo.\n\n— Velajuy`
 	const html = `
 		<div style="font-family: -apple-system, system-ui, sans-serif; max-width: 480px; margin: 0 auto; padding: 32px 24px; color: #5c1a2a;">
-			<h1 style="margin: 0 0 16px; font-size: 24px;">Hola 👋</h1>
+			<h1 style="margin: 0 0 16px; font-size: 24px;">${HEART_SVG}Hola</h1>
 			<p style="margin: 0 0 24px; line-height: 1.5;">Haz clic en el botón para entrar a tu cuenta de Velajuy.</p>
 			<p style="margin: 0 0 32px;">
 				<a href="${url}" style="display: inline-block; background: #5c1a2a; color: #fff; padding: 14px 24px; border-radius: 12px; text-decoration: none; font-weight: 600;">Entrar a Velajuy</a>
