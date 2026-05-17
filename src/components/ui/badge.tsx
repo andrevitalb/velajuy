@@ -3,7 +3,10 @@ import { cn } from "@/lib/cn"
 
 export type BadgeTone = "neutral" | "info" | "success" | "warning" | "danger" | "pending"
 
-const map: Record<BadgeTone, { bg: string; fg: string; Icon: React.ComponentType<{ className?: string; "aria-label"?: string }> }> = {
+const TONE_STYLES: Record<
+	BadgeTone,
+	{ bg: string; fg: string; Icon: React.ComponentType<{ className?: string }> }
+> = {
 	neutral: { bg: "bg-velajuy-pink-soft", fg: "text-velajuy-wine", Icon: CircleDashed },
 	info: { bg: "bg-blue-50", fg: "text-blue-800", Icon: Info },
 	success: { bg: "bg-emerald-50", fg: "text-emerald-800", Icon: CheckCircle2 },
@@ -25,7 +28,7 @@ export function Badge({
 	className?: string
 	pulse?: boolean
 }) {
-	const { bg, fg, Icon } = map[tone]
+	const { bg, fg, Icon } = TONE_STYLES[tone]
 	return (
 		<span
 			className={cn(
@@ -36,7 +39,8 @@ export function Badge({
 				className,
 			)}
 		>
-			<Icon className="size-3" aria-label={srLabel ?? tone} />
+			<Icon aria-hidden="true" className="size-3" />
+			{srLabel && <span className="sr-only">{srLabel}</span>}
 			{children}
 		</span>
 	)

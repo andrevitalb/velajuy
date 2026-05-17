@@ -7,14 +7,14 @@ type Size = "sm" | "md" | "lg"
 
 const base =
 	"inline-flex items-center justify-center gap-2 font-medium transition-all duration-150 ease-out " +
-	"active:scale-95 active:opacity-90 disabled:cursor-not-allowed disabled:opacity-60 disabled:active:scale-100 " +
-	"focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-velajuy-wine"
+	"active:scale-95 active:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
 
 const variants: Record<Variant, string> = {
 	primary: "bg-velajuy-wine text-velajuy-cream hover:bg-velajuy-wine-soft",
-	secondary: "border border-velajuy-wine text-velajuy-wine bg-transparent hover:bg-velajuy-pink-soft",
+	secondary:
+		"border border-velajuy-wine text-velajuy-wine bg-transparent hover:bg-velajuy-pink-soft",
 	ghost: "text-velajuy-wine hover:bg-velajuy-pink-soft",
-	danger: "bg-[--color-danger] text-white hover:opacity-90",
+	danger: "bg-danger text-white hover:bg-danger/90",
 }
 
 const sizes: Record<Size, string> = {

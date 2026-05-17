@@ -31,13 +31,16 @@
 	:focus-visible {
 		outline: 2px solid var(--color-velajuy-wine);
 		outline-offset: 2px;
-		border-radius: 4px;
 	}
-	html { scroll-behavior: smooth; }
+	html {
+		scroll-behavior: smooth;
+	}
 }
 
 @media (prefers-reduced-motion: reduce) {
-	*, *::before, *::after {
+	*,
+	*::before,
+	*::after {
 		animation-duration: 0.001ms !important;
 		animation-iteration-count: 1 !important;
 		transition-duration: 0.001ms !important;
@@ -46,32 +49,73 @@
 }
 
 @keyframes velajuy-fade-in {
-	from { opacity: 0; }
-	to { opacity: 1; }
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
 }
 @keyframes velajuy-scale-in {
-	from { opacity: 0; transform: scale(0.96); }
-	to { opacity: 1; transform: scale(1); }
+	from {
+		opacity: 0;
+		transform: scale(0.96);
+	}
+	to {
+		opacity: 1;
+		transform: scale(1);
+	}
 }
 @keyframes velajuy-slide-up {
-	from { opacity: 0; transform: translateY(8px); }
-	to { opacity: 1; transform: translateY(0); }
+	from {
+		opacity: 0;
+		transform: translateY(8px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
 }
 @keyframes velajuy-pop {
-	0% { transform: scale(1); }
-	40% { transform: scale(1.18); }
-	100% { transform: scale(1); }
+	0% {
+		transform: scale(1);
+	}
+	40% {
+		transform: scale(1.18);
+	}
+	100% {
+		transform: scale(1);
+	}
 }
 @keyframes velajuy-pulse-soft {
-	0%, 100% { opacity: 1; }
-	50% { opacity: 0.55; }
+	0%,
+	100% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0.55;
+	}
 }
 
-.animate-fade-in { animation: velajuy-fade-in var(--duration-slow) var(--ease-out-soft) both; }
-.animate-scale-in { animation: velajuy-scale-in var(--duration-slow) var(--ease-spring) both; }
-.animate-slide-up { animation: velajuy-slide-up var(--duration-slow) var(--ease-out-soft) both; }
-.animate-pop { animation: velajuy-pop 320ms var(--ease-spring); }
-.animate-pulse-soft { animation: velajuy-pulse-soft 2s ease-in-out infinite; }
+.animate-fade-in {
+	animation: velajuy-fade-in var(--duration-slow) var(--ease-out-soft) both;
+}
+.animate-scale-in {
+	animation: velajuy-scale-in var(--duration-slow) var(--ease-spring) both;
+}
+.animate-slide-up {
+	animation: velajuy-slide-up var(--duration-slow) var(--ease-out-soft) both;
+}
+.animate-pop {
+	animation: velajuy-pop 320ms var(--ease-spring);
+}
+.animate-pulse-soft {
+	animation: velajuy-pulse-soft 2s ease-in-out infinite;
+}
 
-dialog[open] { animation: velajuy-scale-in var(--duration-slow) var(--ease-spring); }
-dialog::backdrop { animation: velajuy-fade-in var(--duration-base) var(--ease-out-soft); }
+dialog[open] {
+	animation: velajuy-scale-in var(--duration-slow) var(--ease-spring);
+}
+dialog::backdrop {
+	animation: velajuy-fade-in var(--duration-base) var(--ease-out-soft);
+}
