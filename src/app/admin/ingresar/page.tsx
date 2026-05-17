@@ -33,7 +33,7 @@ export default function AdminIngresarPage() {
 				</p>
 			) : (
 				<form className="mt-6 space-y-4" onSubmit={handleSubmit}>
-					<input type="hidden" name="callbackURL" value={callbackURL} readOnly />
+					<input type="hidden" name="callbackURL" value={callbackURL} />
 					<input
 						type="email"
 						value={email}
