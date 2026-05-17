@@ -8,5 +8,70 @@
 	--color-velajuy-wine-soft: #7a3d4d;
 	--color-velajuy-cream: #fffaf5;
 
+	--color-success: #2f7a4d;
+	--color-warning: #b76e00;
+	--color-danger: #9a1f2b;
+	--color-info: #1f5a9a;
+
 	--font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+	--ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+	--ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+	--duration-fast: 150ms;
+	--duration-base: 200ms;
+	--duration-slow: 300ms;
+
+	--radius-sm: 0.375rem;
+	--radius-md: 0.5rem;
+	--radius-lg: 0.75rem;
+	--radius-xl: 1rem;
 }
+
+@layer base {
+	:focus-visible {
+		outline: 2px solid var(--color-velajuy-wine);
+		outline-offset: 2px;
+		border-radius: 4px;
+	}
+	html { scroll-behavior: smooth; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+	*, *::before, *::after {
+		animation-duration: 0.001ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.001ms !important;
+		scroll-behavior: auto !important;
+	}
+}
+
+@keyframes velajuy-fade-in {
+	from { opacity: 0; }
+	to { opacity: 1; }
+}
+@keyframes velajuy-scale-in {
+	from { opacity: 0; transform: scale(0.96); }
+	to { opacity: 1; transform: scale(1); }
+}
+@keyframes velajuy-slide-up {
+	from { opacity: 0; transform: translateY(8px); }
+	to { opacity: 1; transform: translateY(0); }
+}
+@keyframes velajuy-pop {
+	0% { transform: scale(1); }
+	40% { transform: scale(1.18); }
+	100% { transform: scale(1); }
+}
+@keyframes velajuy-pulse-soft {
+	0%, 100% { opacity: 1; }
+	50% { opacity: 0.55; }
+}
+
+.animate-fade-in { animation: velajuy-fade-in var(--duration-slow) var(--ease-out-soft) both; }
+.animate-scale-in { animation: velajuy-scale-in var(--duration-slow) var(--ease-spring) both; }
+.animate-slide-up { animation: velajuy-slide-up var(--duration-slow) var(--ease-out-soft) both; }
+.animate-pop { animation: velajuy-pop 320ms var(--ease-spring); }
+.animate-pulse-soft { animation: velajuy-pulse-soft 2s ease-in-out infinite; }
+
+dialog[open] { animation: velajuy-scale-in var(--duration-slow) var(--ease-spring); }
+dialog::backdrop { animation: velajuy-fade-in var(--duration-base) var(--ease-out-soft); }
