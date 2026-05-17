@@ -44,7 +44,7 @@ export function AdminSidebar({ role }: { role: Role }) {
 	const visible = LINKS.filter((l) => (l.ownerOnly ? role === "owner" : true))
 
 	return (
-		<aside className="w-60 shrink-0 border-r border-velajuy-wine/10 bg-velajuy-cream p-4">
+		<aside className="w-60 shrink-0 border-r border-velajuy-wine/10 bg-velajuy-cream p-4 print:hidden">
 			<Link href={"/admin" as Route} className="block text-xl font-bold text-velajuy-wine">
 				Velajuy · Admin
 			</Link>
