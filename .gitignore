@@ -13,3 +13,8 @@ playwright-report
 test-results
 *.tsbuildinfo
 .superpowers/
+
+.claude-flow/
+.claude/
+agents/
+.swarm/
