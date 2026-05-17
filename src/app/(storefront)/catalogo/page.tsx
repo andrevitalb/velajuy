@@ -1,3 +1,4 @@
+import Link from "next/link"
 import { filtersFromSearchParams } from "@/lib/catalog/filters"
 import { listAttributeFacets, listProducts } from "@/lib/catalog/queries"
 import { ProductCard } from "@/components/storefront/product-card"
@@ -28,6 +29,14 @@ export default async function CatalogoPage({
 						<EmptyState
 							title="No encontramos pelucas con esos filtros"
 							description="Prueba con menos filtros o limpia la selección."
+							action={
+								<Link
+									href="/catalogo"
+									className="inline-flex h-11 items-center justify-center rounded-lg bg-velajuy-wine px-4 text-sm text-velajuy-cream transition-all duration-150 active:scale-95"
+								>
+									Limpiar filtros
+								</Link>
+							}
 						/>
 					) : (
 						<ul className="grid grid-cols-2 gap-4 lg:grid-cols-3 xl:grid-cols-4">
