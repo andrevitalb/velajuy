@@ -4,6 +4,15 @@ import { X } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useCallback, useEffect, useRef } from "react"
 
+/**
+ * Modal — accessible dialog with focus trap.
+ *
+ * Lifecycle contract: this component MUST be conditionally rendered (mounted on
+ * open, unmounted on close), NOT toggled via an `open` prop. Focus restoration
+ * relies on the effect cleanup, which only fires on unmount.
+ *
+ * Used via Next.js parallel routes (`@modal/(.)*`) which mount/unmount the modal.
+ */
 export function Modal({
 	children,
 	onClose,
