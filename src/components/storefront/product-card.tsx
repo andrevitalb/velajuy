@@ -8,7 +8,7 @@ import type { ProductCard as ProductCardData } from "@/lib/catalog/queries"
 export function ProductCard({ product }: { product: ProductCardData }) {
 	const href = `/producto/${product.slug}` as Route
 	return (
-		<article className="group rounded-2xl bg-white p-3 shadow-sm transition hover:shadow-md">
+		<article className="group rounded-2xl bg-white p-3 shadow-sm transition-shadow duration-200 hover:shadow-md">
 			<Link href={href} scroll={false} className="block overflow-hidden rounded-xl">
 				<div className="relative aspect-square bg-velajuy-pink-soft">
 					{product.primaryImageUrl ? (
@@ -16,15 +16,20 @@ export function ProductCard({ product }: { product: ProductCardData }) {
 							src={product.primaryImageUrl}
 							alt={product.name}
 							fill
-							sizes="(min-width: 1024px) 25vw, 50vw"
-							className="object-cover transition group-hover:scale-105"
+							loading="lazy"
+							sizes="(min-width: 1024px) 22vw, (min-width: 768px) 48vw, 100vw"
+							className="object-cover transition-transform duration-300 ease-out group-hover:scale-105"
 						/>
 					) : null}
 				</div>
 			</Link>
 			<div className="mt-3 flex items-start justify-between gap-2">
 				<div>
-					<Link href={href} scroll={false} className="text-sm font-medium text-velajuy-wine">
+					<Link
+						href={href}
+						scroll={false}
+						className="text-base font-medium leading-tight text-velajuy-wine"
+					>
 						{product.name}
 					</Link>
 					<Price
