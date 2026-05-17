@@ -1,14 +1,14 @@
 import { NextResponse } from "next/server"
 import { z } from "zod"
 import { requireAdmin } from "@/lib/auth-guards"
-import { presignProductImageUpload } from "@/lib/r2/presign"
+import { presignProductImageUpload, MAX_BYTES } from "@/lib/r2/presign"
 import { productImageKey } from "@/lib/r2/key"
 
 const Body = z.object({
 	productId: z.string().uuid(),
 	filename: z.string().min(1).max(200),
 	contentType: z.string().min(1),
-	contentLength: z.number().int().positive(),
+	contentLength: z.number().int().positive().max(MAX_BYTES),
 })
 
 export async function POST(request: Request) {

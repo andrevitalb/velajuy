@@ -3,7 +3,7 @@ import { getSignedUrl } from "@aws-sdk/s3-request-presigner"
 import { r2 } from "./client"
 import { env } from "@/lib/env"
 
-const MAX_BYTES = 5 * 1024 * 1024 // 5 MB
+export const MAX_BYTES = 5 * 1024 * 1024 // 5 MB
 const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp", "image/avif"]
 
 export async function presignProductImageUpload({
