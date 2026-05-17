@@ -1,0 +1,1 @@
+CREATE UNIQUE INDEX "back_in_stock_subscriptions_product_email_idx" ON "back_in_stock_subscriptions" USING btree ("product_id","email");

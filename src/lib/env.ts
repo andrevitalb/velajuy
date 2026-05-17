@@ -7,6 +7,8 @@ const schema = z.object({
 	BETTER_AUTH_URL: z.url(),
 	NEXT_PUBLIC_APP_URL: z.url(),
 	NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
+	RESEND_API_KEY: z.string().optional(),
+	EMAIL_FROM: z.string().default("Velajuy <noreply@velajuy.com>"),
 })
 
 const parsed = schema.safeParse(process.env)
