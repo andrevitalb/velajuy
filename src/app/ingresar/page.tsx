@@ -1,9 +1,13 @@
 "use client"
 
 import { useState } from "react"
+import { useSearchParams } from "next/navigation"
 import { signIn } from "@/lib/auth-client"
+import { safeRedirect } from "@/lib/safe-redirect"
 
 export default function IngresarPage() {
+	const search = useSearchParams()
+	const callbackURL = safeRedirect(search.get("redirect"), "/cuenta")
 	const [email, setEmail] = useState("")
 	const [status, setStatus] = useState<"idle" | "loading" | "sent" | "error">("idle")
 	const [error, setError] = useState<string | null>(null)
@@ -12,7 +16,7 @@ export default function IngresarPage() {
 		e.preventDefault()
 		setStatus("loading")
 		setError(null)
-		const result = await signIn.magicLink({ email, callbackURL: "/cuenta" })
+		const result = await signIn.magicLink({ email, callbackURL })
 		if (result.error) {
 			setStatus("error")
 			setError(result.error.message ?? "Error al enviar el enlace")
@@ -32,6 +36,7 @@ export default function IngresarPage() {
 				</p>
 			) : (
 				<form className="mt-6 space-y-4" onSubmit={handleSubmit}>
+					<input type="hidden" name="callbackURL" value={callbackURL} readOnly />
 					<input
 						type="email"
 						value={email}
