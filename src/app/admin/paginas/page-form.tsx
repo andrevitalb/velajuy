@@ -77,7 +77,11 @@ export function PageForm({
 					className={`${inputCls} font-mono`}
 				/>
 			</Field>
-			<Field label="Meta description" htmlFor={id("metaDescription")} helper="Máximo 280 caracteres">
+			<Field
+				label="Meta description"
+				htmlFor={id("metaDescription")}
+				helper="Máximo 280 caracteres"
+			>
 				<input
 					id={id("metaDescription")}
 					value={form.metaDescription ?? ""}

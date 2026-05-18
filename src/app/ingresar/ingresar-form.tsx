@@ -68,12 +68,7 @@ export function IngresarForm() {
 							</p>
 						)}
 					</div>
-					<Button
-						type="submit"
-						size="lg"
-						pending={status === "loading"}
-						className="w-full"
-					>
+					<Button type="submit" size="lg" pending={status === "loading"} className="w-full">
 						{status === "loading" ? "Enviando…" : "Enviar enlace"}
 					</Button>
 				</form>

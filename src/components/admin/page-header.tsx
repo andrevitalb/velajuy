@@ -27,10 +27,7 @@ export function PageHeader({
 							return (
 								<span key={`${c.href}-${idx}`} className="flex items-center gap-1">
 									{isLast ? (
-										<span
-											aria-current="page"
-											className="font-medium text-velajuy-wine"
-										>
+										<span aria-current="page" className="font-medium text-velajuy-wine">
 											{c.label}
 										</span>
 									) : (

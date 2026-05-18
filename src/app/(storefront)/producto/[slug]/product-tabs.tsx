@@ -12,9 +12,7 @@ export function ProductTabs({ tabs }: { tabs: Tab[] }) {
 		if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return
 		e.preventDefault()
 		const next =
-			e.key === "ArrowRight"
-				? (idx + 1) % tabs.length
-				: (idx - 1 + tabs.length) % tabs.length
+			e.key === "ArrowRight" ? (idx + 1) % tabs.length : (idx - 1 + tabs.length) % tabs.length
 		setActive(tabs[next].key)
 		;(e.currentTarget.parentElement?.children[next] as HTMLButtonElement | undefined)?.focus()
 	}

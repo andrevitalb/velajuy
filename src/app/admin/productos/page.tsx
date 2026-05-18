@@ -7,10 +7,7 @@ import { Pagination } from "@/components/admin/pagination"
 import { SortableTh } from "@/components/admin/sortable-th"
 import { StatusPill } from "@/components/admin/status-pill"
 import { formatCOP } from "@/lib/money"
-import {
-	listAdminProductsPaginated,
-	type ProductsSortField,
-} from "@/lib/admin/products/queries"
+import { listAdminProductsPaginated, type ProductsSortField } from "@/lib/admin/products/queries"
 
 const PER_PAGE = 20
 const ALLOWED_SORT: ProductsSortField[] = [

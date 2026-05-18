@@ -67,12 +67,7 @@ export default function ZonesPage() {
 								</p>
 							</div>
 							<div className="flex gap-2">
-								<Button
-									type="button"
-									variant="secondary"
-									size="sm"
-									onClick={() => setEditing(z)}
-								>
+								<Button type="button" variant="secondary" size="sm" onClick={() => setEditing(z)}>
 									Editar
 								</Button>
 								<Button

@@ -53,10 +53,7 @@ export function BackInStockForm({
 
 	return (
 		<form onSubmit={onSubmit} className="rounded-xl bg-velajuy-cream p-4">
-			<label
-				htmlFor="back-in-stock-email"
-				className="block text-sm font-medium text-velajuy-wine"
-			>
+			<label htmlFor="back-in-stock-email" className="block text-sm font-medium text-velajuy-wine">
 				Avísame cuando vuelva
 			</label>
 			<div className="mt-2 flex gap-2">
@@ -78,11 +75,7 @@ export function BackInStockForm({
 				</Button>
 			</div>
 			{error && (
-				<p
-					id="back-in-stock-email-error"
-					role="alert"
-					className="mt-2 text-sm text-rose-700"
-				>
+				<p id="back-in-stock-email-error" role="alert" className="mt-2 text-sm text-rose-700">
 					{error}
 				</p>
 			)}

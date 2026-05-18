@@ -6,13 +6,7 @@ import { cn } from "@/lib/cn"
 
 type Img = { id?: string; url: string; altText?: string | null }
 
-export function ProductGallery({
-	images,
-	productName,
-}: {
-	images: Img[]
-	productName: string
-}) {
+export function ProductGallery({ images, productName }: { images: Img[]; productName: string }) {
 	const [active, setActive] = useState(0)
 	const move = useCallback(
 		(delta: number) =>

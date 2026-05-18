@@ -69,12 +69,7 @@ export function AdminIngresarForm() {
 					/>
 				</label>
 				{error && <p className="rounded-xl bg-red-50 px-4 py-3 text-sm text-red-800">{error}</p>}
-				<Button
-					type="submit"
-					size="lg"
-					pending={status === "loading"}
-					className="w-full"
-				>
+				<Button type="submit" size="lg" pending={status === "loading"} className="w-full">
 					{status === "loading" ? "Entrando..." : "Entrar"}
 				</Button>
 			</form>

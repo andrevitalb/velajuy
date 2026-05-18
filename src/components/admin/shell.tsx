@@ -17,10 +17,7 @@ export async function AdminShell({ children }: { children: React.ReactNode }) {
 				<header className="flex items-center justify-between gap-4 border-b border-velajuy-wine/10 bg-velajuy-cream px-4 py-3 md:hidden print:hidden">
 					<div className="flex items-center gap-2">
 						<MobileNav role={role} />
-						<Link
-							href={"/admin" as Route}
-							className="text-base font-bold text-velajuy-wine"
-						>
+						<Link href={"/admin" as Route} className="text-base font-bold text-velajuy-wine">
 							Velajuy · Admin
 						</Link>
 					</div>

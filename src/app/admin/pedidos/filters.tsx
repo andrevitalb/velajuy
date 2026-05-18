@@ -33,10 +33,7 @@ export function OrderFilters() {
 		router.push(`/admin/pedidos?${next.toString()}` as Route)
 	}
 
-	const activeCount = FILTER_KEYS.reduce(
-		(acc, key) => acc + (search.get(key) ? 1 : 0),
-		0,
-	)
+	const activeCount = FILTER_KEYS.reduce((acc, key) => acc + (search.get(key) ? 1 : 0), 0)
 
 	return (
 		<div className="mb-6 flex flex-wrap items-center gap-3">

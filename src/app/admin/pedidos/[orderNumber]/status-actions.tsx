@@ -49,12 +49,7 @@ export function StatusActions({
 				</Button>
 			)}
 			{forward === "shipped" && (
-				<Button
-					type="button"
-					size="sm"
-					disabled={pending}
-					onClick={() => setShowShipForm(true)}
-				>
+				<Button type="button" size="sm" disabled={pending} onClick={() => setShowShipForm(true)}>
 					Marcar enviado
 				</Button>
 			)}

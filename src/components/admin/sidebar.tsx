@@ -39,13 +39,7 @@ const LINKS: LinkDef[] = [
 	},
 ]
 
-export function AdminNavList({
-	role,
-	onNavigate,
-}: {
-	role: AdminRole
-	onNavigate?: () => void
-}) {
+export function AdminNavList({ role, onNavigate }: { role: AdminRole; onNavigate?: () => void }) {
 	const pathname = usePathname()
 	const visible = LINKS.filter((l) => (l.ownerOnly ? role === "owner" : true))
 
@@ -62,9 +56,7 @@ export function AdminNavList({
 						aria-current={active ? "page" : undefined}
 						onClick={onNavigate}
 						className={`flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition-colors duration-150 ${
-							active
-								? "bg-velajuy-wine text-white"
-								: "text-velajuy-wine hover:bg-velajuy-pink-soft"
+							active ? "bg-velajuy-wine text-white" : "text-velajuy-wine hover:bg-velajuy-pink-soft"
 						}`}
 					>
 						<Icon className="size-4" aria-hidden="true" /> {l.label}
