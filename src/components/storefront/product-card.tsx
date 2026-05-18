@@ -5,10 +5,19 @@ import { StockBadge } from "./stock-badge"
 import { Price } from "./price"
 import type { ProductCard as ProductCardData } from "@/lib/catalog/queries"
 
-export function ProductCard({ product }: { product: ProductCardData }) {
+export function ProductCard({
+	product,
+	style,
+}: {
+	product: ProductCardData
+	style?: React.CSSProperties
+}) {
 	const href = `/producto/${product.slug}` as Route
 	return (
-		<article className="group rounded-2xl bg-white p-3 shadow-sm transition-shadow duration-200 hover:shadow-md">
+		<article
+			style={style}
+			className="group animate-slide-up rounded-2xl bg-white p-3 shadow-sm transition-shadow duration-200 hover:shadow-md"
+		>
 			<Link href={href} scroll={false} className="block overflow-hidden rounded-xl">
 				<div className="relative aspect-square bg-velajuy-pink-soft">
 					{product.primaryImageUrl ? (

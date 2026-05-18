@@ -40,9 +40,12 @@ export default async function CatalogoPage({
 						/>
 					) : (
 						<ul className="grid grid-cols-2 gap-4 lg:grid-cols-3 xl:grid-cols-4">
-							{items.map((p) => (
+							{items.map((p, i) => (
 								<li key={p.id}>
-									<ProductCard product={p} />
+									<ProductCard
+										product={p}
+										style={{ animationDelay: `${Math.min(i, 7) * 50}ms` }}
+									/>
 								</li>
 							))}
 						</ul>
