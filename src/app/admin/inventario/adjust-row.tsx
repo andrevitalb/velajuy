@@ -5,6 +5,13 @@ import { toast } from "sonner"
 import { adjustStock } from "@/lib/admin/inventory/actions"
 import { Button } from "@/components/ui/button"
 
+const REASONS = ["restock", "adjustment", "return"] as const
+type Reason = (typeof REASONS)[number]
+
+function isReason(v: string): v is Reason {
+	return (REASONS as readonly string[]).includes(v)
+}
+
 export function AdjustRow({
 	productId,
 	name,
@@ -16,8 +23,10 @@ export function AdjustRow({
 	current: number
 	threshold: number
 }) {
-	const [delta, setDelta] = useState(0)
-	const [reason, setReason] = useState<"adjustment" | "restock" | "return">("restock")
+	// Keep the raw string so the user can type a leading "-" mid-entry.
+	// Parsing happens at submit time.
+	const [deltaInput, setDeltaInput] = useState("0")
+	const [reason, setReason] = useState<Reason>("restock")
 	const [notes, setNotes] = useState("")
 	const [pending, startTransition] = useTransition()
 	const [optimisticStock, addOptimistic] = useOptimistic(
@@ -25,18 +34,14 @@ export function AdjustRow({
 		(stock: number, change: number) => stock + change,
 	)
 
-	async function undo(applied: number) {
-		try {
-			await adjustStock({ productId, delta: -applied, reason: "adjustment", notes: "undo" })
-			toast.success("Ajuste revertido")
-		} catch (err) {
-			toast.error(err instanceof Error ? err.message : "No se pudo deshacer")
-		}
+	function parseDelta(): number {
+		const n = Number.parseInt(deltaInput, 10)
+		return Number.isNaN(n) ? 0 : n
 	}
 
 	function submit() {
-		if (delta === 0) return
-		const applied = delta
+		const applied = parseDelta()
+		if (applied === 0) return
 		const appliedNotes = notes || null
 		const appliedReason = reason
 		startTransition(async () => {
@@ -52,18 +57,33 @@ export function AdjustRow({
 					action: {
 						label: "Deshacer",
 						onClick: () => {
-							startTransition(() => {
+							// Revert via a fresh transition. We optimistically subtract the
+							// applied delta, then call the server. On failure we re-apply
+							// the optimistic delta so the UI matches the actual server state.
+							startTransition(async () => {
 								addOptimistic(-applied)
-								void undo(applied)
+								try {
+									await adjustStock({
+										productId,
+										delta: -applied,
+										reason: "adjustment",
+										notes: "undo",
+									})
+									toast.success("Ajuste revertido")
+								} catch (err) {
+									addOptimistic(applied)
+									toast.error(err instanceof Error ? err.message : "No se pudo deshacer")
+								}
 							})
 						},
 					},
 				})
-				setDelta(0)
+				setDeltaInput("0")
 				setNotes("")
 			} catch (err) {
-				// Optimistic state is auto-reverted when the transition finishes
-				// because React reconciles back to the server-driven `current`.
+				// Revert the optimistic delta explicitly. We can't rely on a server
+				// revalidatePath because the action threw before completing.
+				addOptimistic(-applied)
 				toast.error(err instanceof Error ? err.message : "No se pudo aplicar el ajuste")
 			}
 		})
@@ -80,10 +100,12 @@ export function AdjustRow({
 			</td>
 			<td className="py-3">
 				<input
-					type="number"
+					type="text"
+					inputMode="numeric"
+					pattern="-?[0-9]*"
 					aria-label={`Delta de stock para ${name}`}
-					value={delta}
-					onChange={(e) => setDelta(parseInt(e.target.value, 10) || 0)}
+					value={deltaInput}
+					onChange={(e) => setDeltaInput(e.target.value)}
 					className="w-20 rounded-lg border border-velajuy-wine/20 px-2 py-1 text-sm"
 				/>
 			</td>
@@ -91,7 +113,10 @@ export function AdjustRow({
 				<select
 					aria-label={`Motivo del ajuste para ${name}`}
 					value={reason}
-					onChange={(e) => setReason(e.target.value as typeof reason)}
+					onChange={(e) => {
+						const v = e.target.value
+						if (isReason(v)) setReason(v)
+					}}
 					className="rounded-lg border border-velajuy-wine/20 px-2 py-1 text-sm"
 				>
 					<option value="restock">Reposición</option>
@@ -114,7 +139,7 @@ export function AdjustRow({
 					size="sm"
 					onClick={submit}
 					pending={pending}
-					disabled={pending || delta === 0}
+					disabled={pending || parseDelta() === 0}
 				>
 					Aplicar
 				</Button>
