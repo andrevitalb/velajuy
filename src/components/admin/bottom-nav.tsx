@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { usePathname, useRouter } from "next/navigation"
+import { usePathname } from "next/navigation"
 import type { Route } from "next"
 import { useEffect, useState } from "react"
 import {
@@ -9,14 +9,12 @@ import {
 	Boxes,
 	FileText,
 	LayoutDashboard,
-	LogOut,
 	MoreHorizontal,
 	Package,
 	Settings,
 	ShoppingBag,
 	Truck,
 } from "lucide-react"
-import { signOut } from "@/lib/auth-client"
 import { Sheet } from "@/components/ui/sheet"
 import { cn } from "@/lib/cn"
 import type { AdminRole } from "./sidebar"
@@ -86,9 +84,13 @@ const OVERFLOW: Item[] = [
 	},
 ]
 
+const TAB_CLASS =
+	"flex h-full min-w-0 flex-col items-center justify-center gap-1 px-1 py-2 text-[11px] font-medium leading-tight transition-colors duration-150"
+const PILL_CLASS =
+	"flex h-7 w-11 items-center justify-center rounded-full transition-colors duration-150"
+
 export function AdminBottomNav({ role }: { role: AdminRole }) {
 	const pathname = usePathname()
-	const router = useRouter()
 	const [moreOpen, setMoreOpen] = useState(false)
 	const overflowItems = OVERFLOW.filter((i) => (i.ownerOnly ? role === "owner" : true))
 
@@ -99,64 +101,58 @@ export function AdminBottomNav({ role }: { role: AdminRole }) {
 
 	const onOverflowPage = overflowItems.some((i) => i.matchesPath(pathname))
 
-	async function handleSignOut() {
-		setMoreOpen(false)
-		await signOut()
-		router.push("/admin/ingresar")
-	}
-
 	return (
 		<>
 			<nav
 				aria-label="Navegación principal"
-				className="fixed inset-x-0 bottom-0 z-30 grid grid-cols-5 border-t border-velajuy-wine/10 bg-velajuy-cream pb-[env(safe-area-inset-bottom)] md:hidden print:hidden"
+				className="fixed inset-x-0 bottom-0 z-30 border-t border-velajuy-wine/10 bg-velajuy-cream pb-[env(safe-area-inset-bottom)] md:hidden print:hidden"
 			>
-				{PRIMARY.map((item) => {
-					const Icon = item.icon
-					const active = item.matchesPath(pathname)
-					return (
-						<Link
-							key={item.href}
-							href={item.href}
-							aria-current={active ? "page" : undefined}
+				<ul className="grid grid-cols-5 px-2">
+					{PRIMARY.map((item) => {
+						const Icon = item.icon
+						const active = item.matchesPath(pathname)
+						return (
+							<li key={item.href} className="contents">
+								<Link
+									href={item.href}
+									aria-current={active ? "page" : undefined}
+									className={cn(
+										TAB_CLASS,
+										active
+											? "text-velajuy-wine"
+											: "text-velajuy-wine-soft hover:text-velajuy-wine",
+									)}
+								>
+									<span className={cn(PILL_CLASS, active && "bg-velajuy-pink-soft")}>
+										<Icon className="size-5" aria-hidden="true" />
+									</span>
+									<span className="truncate">{item.label}</span>
+								</Link>
+							</li>
+						)
+					})}
+					<li className="contents">
+						<button
+							type="button"
+							onClick={() => setMoreOpen(true)}
+							aria-haspopup="dialog"
+							aria-expanded={moreOpen}
+							aria-current={onOverflowPage ? "page" : undefined}
 							className={cn(
-								"flex flex-col items-center justify-center gap-1 py-2 text-xs font-medium transition-colors duration-150",
-								active ? "text-velajuy-wine" : "text-velajuy-wine-soft hover:text-velajuy-wine",
+								TAB_CLASS,
+								"active:scale-95",
+								onOverflowPage
+									? "text-velajuy-wine"
+									: "text-velajuy-wine-soft hover:text-velajuy-wine",
 							)}
 						>
-							<span
-								className={cn(
-									"flex h-7 w-12 items-center justify-center rounded-full transition-colors duration-150",
-									active && "bg-velajuy-pink-soft",
-								)}
-							>
-								<Icon className="size-5" aria-hidden="true" />
+							<span className={cn(PILL_CLASS, onOverflowPage && "bg-velajuy-pink-soft")}>
+								<MoreHorizontal className="size-5" aria-hidden="true" />
 							</span>
-							{item.label}
-						</Link>
-					)
-				})}
-				<button
-					type="button"
-					onClick={() => setMoreOpen(true)}
-					aria-haspopup="dialog"
-					aria-expanded={moreOpen}
-					aria-current={onOverflowPage ? "page" : undefined}
-					className={cn(
-						"flex flex-col items-center justify-center gap-1 py-2 text-xs font-medium transition-colors duration-150 active:scale-95",
-						onOverflowPage ? "text-velajuy-wine" : "text-velajuy-wine-soft hover:text-velajuy-wine",
-					)}
-				>
-					<span
-						className={cn(
-							"flex h-7 w-12 items-center justify-center rounded-full transition-colors duration-150",
-							onOverflowPage && "bg-velajuy-pink-soft",
-						)}
-					>
-						<MoreHorizontal className="size-5" aria-hidden="true" />
-					</span>
-					Más
-				</button>
+							<span className="truncate">Más</span>
+						</button>
+					</li>
+				</ul>
 			</nav>
 			<Sheet open={moreOpen} onClose={() => setMoreOpen(false)} title="Más">
 				<ul className="space-y-1">
@@ -181,16 +177,6 @@ export function AdminBottomNav({ role }: { role: AdminRole }) {
 							</li>
 						)
 					})}
-					<li className="pt-2">
-						<button
-							type="button"
-							onClick={handleSignOut}
-							className="flex h-12 w-full items-center gap-3 rounded-lg border border-velajuy-wine/15 px-3 text-sm text-velajuy-wine transition-all duration-150 hover:bg-velajuy-pink-soft active:scale-[0.98]"
-						>
-							<LogOut className="size-5 shrink-0" aria-hidden="true" />
-							Cerrar sesión
-						</button>
-					</li>
 				</ul>
 			</Sheet>
 		</>
