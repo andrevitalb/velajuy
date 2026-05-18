@@ -14,7 +14,7 @@ import {
 	Settings,
 } from "lucide-react"
 
-type Role = "owner" | "staff"
+export type AdminRole = "owner" | "staff"
 
 type LinkDef = {
 	href: Route
@@ -39,35 +39,51 @@ const LINKS: LinkDef[] = [
 	},
 ]
 
-export function AdminSidebar({ role }: { role: Role }) {
+export function AdminNavList({
+	role,
+	onNavigate,
+}: {
+	role: AdminRole
+	onNavigate?: () => void
+}) {
 	const pathname = usePathname()
 	const visible = LINKS.filter((l) => (l.ownerOnly ? role === "owner" : true))
 
 	return (
-		<aside className="w-60 shrink-0 border-r border-velajuy-wine/10 bg-velajuy-cream p-4 print:hidden">
+		<nav className="space-y-1">
+			{visible.map((l) => {
+				const Icon = l.icon
+				const active =
+					l.href === "/admin" ? pathname === "/admin" : pathname?.startsWith(l.href as string)
+				return (
+					<Link
+						key={l.href}
+						href={l.href}
+						aria-current={active ? "page" : undefined}
+						onClick={onNavigate}
+						className={`flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition-colors duration-150 ${
+							active
+								? "bg-velajuy-wine text-white"
+								: "text-velajuy-wine hover:bg-velajuy-pink-soft"
+						}`}
+					>
+						<Icon className="size-4" aria-hidden="true" /> {l.label}
+					</Link>
+				)
+			})}
+		</nav>
+	)
+}
+
+export function AdminSidebar({ role }: { role: AdminRole }) {
+	return (
+		<aside className="hidden w-60 shrink-0 border-r border-velajuy-wine/10 bg-velajuy-cream p-4 print:hidden md:block">
 			<Link href={"/admin" as Route} className="block text-xl font-bold text-velajuy-wine">
 				Velajuy · Admin
 			</Link>
-			<nav className="mt-6 space-y-1">
-				{visible.map((l) => {
-					const Icon = l.icon
-					const active =
-						l.href === "/admin" ? pathname === "/admin" : pathname?.startsWith(l.href as string)
-					return (
-						<Link
-							key={l.href}
-							href={l.href}
-							className={`flex items-center gap-2 rounded-lg px-3 py-2 text-sm ${
-								active
-									? "bg-velajuy-wine text-white"
-									: "text-velajuy-wine hover:bg-velajuy-pink-soft"
-							}`}
-						>
-							<Icon className="size-4" /> {l.label}
-						</Link>
-					)
-				})}
-			</nav>
+			<div className="mt-6">
+				<AdminNavList role={role} />
+			</div>
 		</aside>
 	)
 }
