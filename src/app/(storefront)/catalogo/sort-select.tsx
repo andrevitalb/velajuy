@@ -22,12 +22,16 @@ export function SortSelect({ current }: { current: Sort }) {
 	}
 
 	return (
-		<label className="flex items-center gap-2 text-sm text-velajuy-wine">
-			<span>Ordenar:</span>
+		<label
+			htmlFor="catalog-sort"
+			className="flex items-center gap-2 text-sm text-velajuy-wine-soft"
+		>
+			Ordenar:
 			<select
+				id="catalog-sort"
 				value={current}
 				onChange={(e) => onChange(e.target.value as Sort)}
-				className="rounded-lg border border-velajuy-wine/20 bg-white px-3 py-1.5 text-sm text-velajuy-wine"
+				className="rounded-md border border-velajuy-wine/20 bg-white px-2 py-1.5 text-sm text-velajuy-wine transition-colors duration-200 focus:border-velajuy-wine"
 			>
 				{OPTIONS.map((opt) => (
 					<option key={opt.value} value={opt.value}>

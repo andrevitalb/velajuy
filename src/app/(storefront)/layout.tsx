@@ -11,7 +11,9 @@ export default function StorefrontLayout({
 	return (
 		<div className="flex min-h-screen flex-col">
 			<StorefrontHeader />
-			<div className="flex-1">{children}</div>
+			<main id="main" tabIndex={-1} className="flex-1 outline-none">
+				{children}
+			</main>
 			<StorefrontFooter />
 			{modal}
 		</div>

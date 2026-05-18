@@ -13,7 +13,7 @@ export function SignOutButton() {
 				await signOut()
 				router.push("/admin/ingresar")
 			}}
-			className="flex items-center gap-2 rounded-lg px-3 py-1.5 text-sm text-velajuy-wine hover:bg-velajuy-pink-soft"
+			className="flex items-center gap-2 rounded-lg px-3 py-1.5 text-sm text-velajuy-wine transition-all duration-150 hover:bg-velajuy-pink-soft active:scale-95 active:opacity-90"
 		>
 			<LogOut className="size-4" /> Salir
 		</button>

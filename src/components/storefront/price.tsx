@@ -1,3 +1,4 @@
+import { cn } from "@/lib/cn"
 import { formatCOP } from "@/lib/money"
 
 export function Price({
@@ -11,10 +12,10 @@ export function Price({
 }) {
 	if (currency !== "COP") {
 		return (
-			<span className={className}>
+			<span className={cn(className, "tabular-nums")}>
 				{amount} {currency}
 			</span>
 		)
 	}
-	return <span className={className}>{formatCOP(amount)}</span>
+	return <span className={cn(className, "tabular-nums")}>{formatCOP(amount)}</span>
 }

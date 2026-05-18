@@ -129,7 +129,7 @@ export function ImageGallery({
 						<button
 							type="button"
 							onClick={() => fileRef.current?.click()}
-							className="flex aspect-square items-center justify-center rounded-xl border-2 border-dashed border-velajuy-wine/30 text-velajuy-wine hover:bg-velajuy-pink-soft"
+							className="flex aspect-square items-center justify-center rounded-xl border-2 border-dashed border-velajuy-wine/30 text-velajuy-wine transition-all duration-150 hover:bg-velajuy-pink-soft active:scale-95 active:opacity-90"
 						>
 							<Plus className="size-6" />
 						</button>
@@ -186,8 +186,8 @@ function SortableTile({
 				type="button"
 				onClick={onRemove}
 				disabled={disabled}
-				className="absolute right-1 top-1 rounded bg-red-700/80 p-1 text-white disabled:opacity-50"
-				aria-label="Eliminar"
+				className="absolute right-1 top-1 rounded bg-danger/80 p-1 text-white transition-all duration-150 hover:bg-danger active:scale-95 active:opacity-90 disabled:opacity-50"
+				aria-label="Eliminar imagen"
 			>
 				<X className="size-4" />
 			</button>

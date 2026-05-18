@@ -40,7 +40,7 @@ export function AttributePicker({
 									key={v.id}
 									type="button"
 									onClick={() => toggle(v.id)}
-									className={`rounded-full border px-3 py-1 text-sm ${
+									className={`rounded-full border px-3 py-1 text-sm transition-all duration-150 active:scale-95 active:opacity-90 ${
 										isActive
 											? "border-velajuy-wine bg-velajuy-wine text-white"
 											: "border-velajuy-wine/20 text-velajuy-wine hover:bg-velajuy-pink-soft"

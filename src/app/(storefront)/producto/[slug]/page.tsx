@@ -1,4 +1,5 @@
 import { headers } from "next/headers"
+import Link from "next/link"
 import { notFound } from "next/navigation"
 import { auth } from "@/lib/auth"
 import { getPagesBySlugs, getProductBySlug, listRelated } from "@/lib/catalog/queries"
@@ -66,6 +67,13 @@ export default async function ProductoPage({ params }: { params: Promise<{ slug:
 
 	return (
 		<main className="mx-auto max-w-6xl px-6 py-12">
+			<nav aria-label="Migas de pan" className="mb-6 text-sm text-velajuy-wine-soft">
+				<Link href="/catalogo" className="hover:text-velajuy-wine">
+					Catálogo
+				</Link>
+				<span className="px-2">/</span>
+				<span aria-current="page">{product.name}</span>
+			</nav>
 			<div className="grid grid-cols-1 gap-10 lg:grid-cols-2">
 				<ProductGallery
 					images={product.images.map((i) => ({ id: i.id, url: i.url, altText: i.altText }))}

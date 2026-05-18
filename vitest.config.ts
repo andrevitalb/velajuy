@@ -6,8 +6,9 @@ const loaded = dotenv.config({ path: ".env.local" }).parsed ?? {}
 
 export default defineConfig({
 	test: {
-		environment: "node",
-		include: ["tests/unit/**/*.test.ts"],
+		environment: "jsdom",
+		include: ["tests/unit/**/*.test.{ts,tsx}"],
+		setupFiles: ["./tests/setup.ts"],
 		env: loaded,
 	},
 	resolve: {

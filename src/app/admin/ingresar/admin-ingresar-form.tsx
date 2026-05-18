@@ -4,6 +4,7 @@ import { useState } from "react"
 import { useSearchParams } from "next/navigation"
 import { signIn } from "@/lib/auth-client"
 import { safeRedirect } from "@/lib/safe-redirect"
+import { Button } from "@/components/ui/button"
 
 export function AdminIngresarForm() {
 	const search = useSearchParams()
@@ -68,13 +69,9 @@ export function AdminIngresarForm() {
 					/>
 				</label>
 				{error && <p className="rounded-xl bg-red-50 px-4 py-3 text-sm text-red-800">{error}</p>}
-				<button
-					type="submit"
-					disabled={status === "loading"}
-					className="w-full rounded-xl bg-velajuy-wine px-4 py-3 font-medium text-white disabled:opacity-60"
-				>
+				<Button type="submit" size="lg" pending={status === "loading"} className="w-full">
 					{status === "loading" ? "Entrando..." : "Entrar"}
-				</button>
+				</Button>
 			</form>
 			<p className="mt-4 text-center text-sm text-velajuy-wine/60">
 				Si olvidaste tu contraseña, contacta al owner.

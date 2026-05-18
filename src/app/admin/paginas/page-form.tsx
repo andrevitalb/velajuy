@@ -1,10 +1,12 @@
 "use client"
 
-import { useState, useTransition } from "react"
+import { useId, useState, useTransition } from "react"
 import { useRouter } from "next/navigation"
 import type { Route } from "next"
 import { toast } from "sonner"
 import { createPage, updatePage } from "@/lib/admin/pages/actions"
+import { Button } from "@/components/ui/button"
+import { Field } from "@/components/admin/field"
 
 type FormState = {
 	slug: string
@@ -26,6 +28,8 @@ export function PageForm({
 	const router = useRouter()
 	const [form, setForm] = useState<FormState>(defaults)
 	const [pending, startTransition] = useTransition()
+	const baseId = useId()
+	const id = (k: string) => `${baseId}-${k}`
 
 	function submit(e: React.FormEvent) {
 		e.preventDefault()
@@ -46,42 +50,46 @@ export function PageForm({
 			onSubmit={submit}
 			className="space-y-4 rounded-2xl border border-velajuy-wine/10 bg-white p-5"
 		>
-			<label className="block text-sm text-velajuy-wine">
-				<span className="mb-1 block font-medium">Slug</span>
+			<Field label="Slug" htmlFor={id("slug")} required>
 				<input
+					id={id("slug")}
 					value={form.slug}
 					onChange={(e) => setForm({ ...form, slug: e.target.value })}
 					required
-					className="w-full rounded-lg border border-velajuy-wine/20 px-3 py-2"
+					className={inputCls}
 				/>
-			</label>
-			<label className="block text-sm text-velajuy-wine">
-				<span className="mb-1 block font-medium">Título</span>
+			</Field>
+			<Field label="Título" htmlFor={id("title")} required>
 				<input
+					id={id("title")}
 					value={form.title}
 					onChange={(e) => setForm({ ...form, title: e.target.value })}
 					required
-					className="w-full rounded-lg border border-velajuy-wine/20 px-3 py-2"
+					className={inputCls}
 				/>
-			</label>
-			<label className="block text-sm text-velajuy-wine">
-				<span className="mb-1 block font-medium">Cuerpo (Markdown)</span>
+			</Field>
+			<Field label="Cuerpo (Markdown)" htmlFor={id("body")}>
 				<textarea
+					id={id("body")}
 					value={form.body}
 					onChange={(e) => setForm({ ...form, body: e.target.value })}
 					rows={14}
-					className="w-full rounded-lg border border-velajuy-wine/20 px-3 py-2 font-mono"
+					className={`${inputCls} font-mono`}
 				/>
-			</label>
-			<label className="block text-sm text-velajuy-wine">
-				<span className="mb-1 block font-medium">Meta description</span>
+			</Field>
+			<Field
+				label="Meta description"
+				htmlFor={id("metaDescription")}
+				helper="Máximo 280 caracteres"
+			>
 				<input
+					id={id("metaDescription")}
 					value={form.metaDescription ?? ""}
 					onChange={(e) => setForm({ ...form, metaDescription: e.target.value || null })}
 					maxLength={280}
-					className="w-full rounded-lg border border-velajuy-wine/20 px-3 py-2"
+					className={inputCls}
 				/>
-			</label>
+			</Field>
 			<label className="flex items-center gap-2 text-sm text-velajuy-wine">
 				<input
 					type="checkbox"
@@ -90,13 +98,11 @@ export function PageForm({
 				/>
 				Publicada
 			</label>
-			<button
-				type="submit"
-				disabled={pending}
-				className="rounded-lg bg-velajuy-wine px-4 py-2 text-sm font-medium text-white disabled:opacity-60"
-			>
+			<Button type="submit" size="sm" pending={pending}>
 				{pending ? "Guardando…" : "Guardar"}
-			</button>
+			</Button>
 		</form>
 	)
 }
+
+const inputCls = "w-full rounded-lg border border-velajuy-wine/20 px-3 py-2"

@@ -1,21 +1,27 @@
+import { Badge } from "@/components/ui/badge"
+
 export function StockBadge({ stock }: { stock: number }) {
-	if (stock <= 0) {
+	if (stock <= 0)
 		return (
-			<span className="inline-flex items-center rounded-full bg-velajuy-wine/10 px-3 py-1 text-xs font-medium text-velajuy-wine">
+			<Badge tone="danger" srLabel="Agotado">
 				Agotado
-			</span>
+			</Badge>
 		)
-	}
-	if (stock <= 2) {
+	if (stock === 1)
 		return (
-			<span className="inline-flex items-center rounded-full bg-velajuy-pink-soft px-3 py-1 text-xs font-medium text-velajuy-wine">
-				Últimas {stock}
-			</span>
+			<Badge tone="warning" srLabel="Última unidad" pulse>
+				Última 1
+			</Badge>
 		)
-	}
+	if (stock <= 3)
+		return (
+			<Badge tone="warning" srLabel="Pocas unidades" pulse>
+				{`Últimas ${stock}`}
+			</Badge>
+		)
 	return (
-		<span className="inline-flex items-center rounded-full bg-velajuy-pink-soft px-3 py-1 text-xs font-medium text-velajuy-wine">
+		<Badge tone="success" srLabel="Disponible">
 			Disponible
-		</span>
+		</Badge>
 	)
 }

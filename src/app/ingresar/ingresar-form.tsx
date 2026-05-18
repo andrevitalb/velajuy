@@ -4,6 +4,7 @@ import { useState } from "react"
 import { useSearchParams } from "next/navigation"
 import { signIn } from "@/lib/auth-client"
 import { safeRedirect } from "@/lib/safe-redirect"
+import { Button } from "@/components/ui/button"
 
 export function IngresarForm() {
 	const search = useSearchParams()
@@ -31,28 +32,45 @@ export function IngresarForm() {
 			<p className="mt-2 text-velajuy-wine-soft">Te enviamos un enlace mágico a tu correo.</p>
 
 			{status === "sent" ? (
-				<p className="mt-6 rounded-xl bg-velajuy-pink-soft p-4 text-velajuy-wine">
+				<div
+					role="status"
+					aria-live="polite"
+					className="mt-6 rounded-xl bg-velajuy-pink-soft p-4 text-velajuy-wine"
+				>
 					¡Listo! Revisa tu correo y haz clic en el enlace para entrar.
-				</p>
+				</div>
 			) : (
 				<form className="mt-6 space-y-4" onSubmit={handleSubmit}>
 					<input type="hidden" name="callbackURL" value={callbackURL} />
-					<input
-						type="email"
-						value={email}
-						onChange={(e) => setEmail(e.target.value)}
-						required
-						placeholder="tu@correo.com"
-						className="w-full rounded-xl border border-velajuy-wine/20 bg-white px-4 py-3 text-velajuy-wine outline-none focus:border-velajuy-wine"
-					/>
-					<button
-						type="submit"
-						disabled={status === "loading"}
-						className="w-full rounded-xl bg-velajuy-wine px-4 py-3 font-medium text-white disabled:opacity-60"
-					>
+					<div>
+						<label
+							htmlFor="login-email"
+							className="mb-1 block text-sm font-medium text-velajuy-wine"
+						>
+							Tu correo
+						</label>
+						<input
+							id="login-email"
+							type="email"
+							name="email"
+							value={email}
+							onChange={(e) => setEmail(e.target.value)}
+							required
+							autoComplete="email"
+							placeholder="tu@correo.com"
+							aria-invalid={error ? true : undefined}
+							aria-describedby={error ? "login-email-error" : undefined}
+							className="w-full rounded-xl border border-velajuy-wine/20 bg-white px-4 py-3 text-velajuy-wine outline-none transition-colors duration-200 focus:border-velajuy-wine"
+						/>
+						{error && (
+							<p id="login-email-error" role="alert" className="mt-2 text-sm text-rose-700">
+								{error}
+							</p>
+						)}
+					</div>
+					<Button type="submit" size="lg" pending={status === "loading"} className="w-full">
 						{status === "loading" ? "Enviando…" : "Enviar enlace"}
-					</button>
-					{error && <p className="text-sm text-red-700">{error}</p>}
+					</Button>
 				</form>
 			)}
 		</main>

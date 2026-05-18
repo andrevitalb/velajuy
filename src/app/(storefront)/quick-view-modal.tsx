@@ -17,7 +17,7 @@ type Props = {
 
 export function QuickViewModal(p: Props) {
 	return (
-		<Modal>
+		<Modal label="Vista rápida del producto">
 			<div className="grid grid-cols-1 gap-6 md:grid-cols-2">
 				<div className="relative aspect-square overflow-hidden rounded-xl bg-velajuy-pink-soft">
 					{p.imageUrl ? (
@@ -43,11 +43,13 @@ export function QuickViewModal(p: Props) {
 					{p.shortDescription ? (
 						<p className="mt-3 text-sm text-velajuy-wine-soft">{p.shortDescription}</p>
 					) : null}
-					<dl className="mt-4 space-y-1 text-sm text-velajuy-wine-soft">
+					<dl className="mt-4 grid grid-cols-1 gap-x-4 gap-y-2 text-sm md:grid-cols-2">
 						{p.attributes.map((a) => (
-							<div key={a.attrName} className="flex gap-2">
-								<dt className="font-medium text-velajuy-wine">{a.attrName}:</dt>
-								<dd>{a.valueName}</dd>
+							<div key={a.attrName} className="flex flex-col">
+								<dt className="text-xs uppercase tracking-wide text-velajuy-wine-soft">
+									{a.attrName}
+								</dt>
+								<dd className="font-medium text-velajuy-wine">{a.valueName}</dd>
 							</div>
 						))}
 					</dl>

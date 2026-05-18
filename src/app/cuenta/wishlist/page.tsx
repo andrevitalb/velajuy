@@ -16,7 +16,7 @@ export default async function WishlistPage() {
 				<div className="mt-8">
 					<EmptyState
 						title="Tu lista está vacía"
-						description="Cuando guardes una peluca con el ♥, aparecerá acá."
+						description="Cuando guardes una peluca con el corazón, aparecerá acá."
 						action={
 							<Link
 								href={"/catalogo" as Route}
