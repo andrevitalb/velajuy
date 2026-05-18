@@ -29,17 +29,19 @@ export function WishlistButton({
 			router.push(`/ingresar?redirect=/producto/${productSlug}` as Route)
 			return
 		}
+		const prev = inWishlist
+		setInWishlist(!prev)
+		setPopKey((k) => k + 1)
 		startTransition(async () => {
-			if (inWishlist) {
-				const r = await removeFromWishlist(productId)
-				setInWishlist(r.inWishlist)
-				toast.success("Quitada de tu lista")
-			} else {
-				const r = await addToWishlist(productId)
-				setInWishlist(r.inWishlist)
-				toast.success("¡Agregada a tu lista!")
+			try {
+				const r = prev ? await removeFromWishlist(productId) : await addToWishlist(productId)
+				// Server is source of truth; reconcile in case prev state was stale.
+				if (r.inWishlist !== !prev) setInWishlist(r.inWishlist)
+				toast.success(prev ? "Quitada de tu lista" : "¡Agregada a tu lista!")
+			} catch {
+				setInWishlist(prev) // revert
+				toast.error("No se pudo actualizar la lista de deseos")
 			}
-			setPopKey((k) => k + 1)
 		})
 	}
 
@@ -62,9 +64,7 @@ export function WishlistButton({
 				aria-hidden="true"
 				className={cn(
 					"size-5 transition-colors duration-150",
-					inWishlist
-						? "fill-velajuy-wine text-velajuy-wine animate-pop"
-						: "text-velajuy-wine",
+					inWishlist ? "fill-velajuy-wine text-velajuy-wine animate-pop" : "text-velajuy-wine",
 				)}
 			/>
 			{inWishlist ? "En tu lista" : "Guardar"}

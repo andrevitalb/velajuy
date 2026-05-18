@@ -20,10 +20,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 					duration={4000}
 					toastOptions={{
 						classNames: {
-							toast:
-								"rounded-xl border border-velajuy-wine/10 bg-velajuy-cream text-velajuy-wine",
+							toast: "rounded-xl border border-velajuy-wine/10",
 							title: "text-sm font-medium",
-							description: "text-xs text-velajuy-wine-soft",
+							description: "text-xs opacity-80",
 						},
 					}}
 				/>
