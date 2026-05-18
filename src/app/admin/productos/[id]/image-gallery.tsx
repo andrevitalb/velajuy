@@ -186,8 +186,8 @@ function SortableTile({
 				type="button"
 				onClick={onRemove}
 				disabled={disabled}
-				className="absolute right-1 top-1 rounded bg-red-700/80 p-1 text-white transition-all duration-150 active:scale-95 active:opacity-90 disabled:opacity-50"
-				aria-label="Eliminar"
+				className="absolute right-1 top-1 rounded bg-danger/80 p-1 text-white transition-all duration-150 hover:bg-danger active:scale-95 active:opacity-90 disabled:opacity-50"
+				aria-label="Eliminar imagen"
 			>
 				<X className="size-4" />
 			</button>

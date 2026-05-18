@@ -77,7 +77,7 @@ export default function ZonesPage() {
 								</Button>
 								<Button
 									type="button"
-									variant="secondary"
+									variant="danger"
 									size="sm"
 									disabled={pending}
 									onClick={() => {
@@ -88,7 +88,6 @@ export default function ZonesPage() {
 											refresh()
 										})
 									}}
-									className="border-red-700 text-red-700 hover:bg-red-50"
 								>
 									Desactivar
 								</Button>

@@ -81,14 +81,13 @@ export function StatusActions({
 			{canCancel && (
 				<Button
 					type="button"
-					variant="secondary"
+					variant="danger"
 					size="sm"
 					pending={pending}
 					onClick={() => {
 						if (!confirm("¿Cancelar este pedido?")) return
 						run("Pedido cancelado", () => cancelOrder(orderId, null))
 					}}
-					className="border-red-700 text-red-700 hover:bg-red-50"
 				>
 					Cancelar pedido
 				</Button>
