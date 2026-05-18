@@ -90,15 +90,15 @@ export function AdjustRow({
 	}
 
 	return (
-		<tr className="border-t border-velajuy-wine/10">
-			<td className="py-3 text-sm text-velajuy-wine">{name}</td>
+		<tr>
+			<td className="px-4 py-2 text-sm text-velajuy-wine">{name}</td>
 			<td
-				className={`py-3 text-sm font-medium ${optimisticStock <= threshold ? "text-red-700" : "text-velajuy-wine"}`}
+				className={`px-4 py-2 text-right text-sm font-medium tabular-nums ${optimisticStock <= threshold ? "text-red-700" : "text-velajuy-wine"}`}
 				aria-live="polite"
 			>
 				{optimisticStock}
 			</td>
-			<td className="py-3">
+			<td className="px-4 py-2">
 				<input
 					type="text"
 					inputMode="numeric"
@@ -106,10 +106,10 @@ export function AdjustRow({
 					aria-label={`Delta de stock para ${name}`}
 					value={deltaInput}
 					onChange={(e) => setDeltaInput(e.target.value)}
-					className="w-20 rounded-lg border border-velajuy-wine/20 px-2 py-1 text-sm"
+					className="w-20 rounded-lg border border-velajuy-wine/20 px-2 py-1 text-sm tabular-nums"
 				/>
 			</td>
-			<td className="py-3">
+			<td className="px-4 py-2">
 				<select
 					aria-label={`Motivo del ajuste para ${name}`}
 					value={reason}
@@ -117,14 +117,14 @@ export function AdjustRow({
 						const v = e.target.value
 						if (isReason(v)) setReason(v)
 					}}
-					className="rounded-lg border border-velajuy-wine/20 px-2 py-1 text-sm"
+					className="w-full rounded-lg border border-velajuy-wine/20 px-2 py-1 text-sm"
 				>
 					<option value="restock">Reposición</option>
 					<option value="adjustment">Ajuste</option>
 					<option value="return">Devolución</option>
 				</select>
 			</td>
-			<td className="py-3">
+			<td className="px-4 py-2">
 				<input
 					aria-label={`Nota del ajuste para ${name}`}
 					value={notes}
@@ -133,7 +133,7 @@ export function AdjustRow({
 					className="w-full rounded-lg border border-velajuy-wine/20 px-2 py-1 text-sm"
 				/>
 			</td>
-			<td className="py-3">
+			<td className="px-4 py-2 text-right">
 				<Button
 					type="button"
 					size="sm"
