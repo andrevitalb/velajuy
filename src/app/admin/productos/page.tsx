@@ -3,29 +3,55 @@ import type { Route } from "next"
 import Image from "next/image"
 import { PageHeader } from "@/components/admin/page-header"
 import { DataTable, type Column } from "@/components/admin/data-table"
+import { Pagination } from "@/components/admin/pagination"
+import { SortableTh } from "@/components/admin/sortable-th"
 import { StatusPill } from "@/components/admin/status-pill"
 import { formatCOP } from "@/lib/money"
-import { listAdminProducts } from "@/lib/admin/products/queries"
+import {
+	listAdminProductsPaginated,
+	type ProductsSortField,
+} from "@/lib/admin/products/queries"
 
-type Row = Awaited<ReturnType<typeof listAdminProducts>>[number]
+const PER_PAGE = 20
+const ALLOWED_SORT: ProductsSortField[] = [
+	"name",
+	"status",
+	"priceAmount",
+	"stockQuantity",
+	"updatedAt",
+]
 
 export default async function ProductsListPage({
 	searchParams,
 }: {
-	searchParams: Promise<{ low?: string; status?: string }>
+	searchParams: Promise<Record<string, string | string[] | undefined>>
 }) {
 	const params = await searchParams
-	const rows = await listAdminProducts({
-		lowStockOnly: params.low === "1",
-		status:
-			params.status === "active" || params.status === "draft" || params.status === "archived"
-				? params.status
-				: undefined,
-	})
+	const status =
+		params.status === "active" || params.status === "draft" || params.status === "archived"
+			? params.status
+			: undefined
+	const sortRaw = typeof params.sort === "string" ? params.sort : undefined
+	const sort = ALLOWED_SORT.includes(sortRaw as ProductsSortField)
+		? (sortRaw as ProductsSortField)
+		: undefined
+	const dir = params.dir === "asc" ? "asc" : "desc"
+	const page = Math.max(1, Number(typeof params.page === "string" ? params.page : 1) || 1)
+
+	const { rows, total } = await listAdminProductsPaginated(
+		{
+			lowStockOnly: params.low === "1",
+			status,
+		},
+		{ sort, dir, page, perPage: PER_PAGE },
+	)
+
+	type Row = (typeof rows)[number]
 
 	const columns: Column<Row>[] = [
 		{
 			header: "Producto",
+			headerCell: <SortableTh field="name" label="Producto" />,
 			cell: (r) => (
 				<div className="flex items-center gap-3">
 					{r.primaryImageUrl ? (
@@ -51,14 +77,20 @@ export default async function ProductsListPage({
 				</div>
 			),
 		},
-		{ header: "Estado", cell: (r) => <StatusPill status={r.status} /> },
+		{
+			header: "Estado",
+			headerCell: <SortableTh field="status" label="Estado" />,
+			cell: (r) => <StatusPill status={r.status} />,
+		},
 		{
 			header: "Precio",
+			headerCell: <SortableTh field="priceAmount" label="Precio" align="right" />,
 			cell: (r) => formatCOP(Number(r.priceAmount)),
 			align: "right",
 		},
 		{
 			header: "Stock",
+			headerCell: <SortableTh field="stockQuantity" label="Stock" align="right" />,
 			cell: (r) => (
 				<span className={r.stockQuantity <= r.lowStockThreshold ? "font-medium text-red-700" : ""}>
 					{r.stockQuantity}
@@ -72,6 +104,7 @@ export default async function ProductsListPage({
 		<>
 			<PageHeader
 				title="Productos"
+				subtitle={`${total} resultados`}
 				actions={
 					<Link
 						href={"/admin/productos/nuevo" as Route}
@@ -86,7 +119,9 @@ export default async function ProductsListPage({
 				rows={rows}
 				rowKey={(r) => r.id}
 				emptyLabel="Aún no hay productos. Crea el primero."
+				caption="Lista de productos"
 			/>
+			<Pagination total={total} perPage={PER_PAGE} />
 		</>
 	)
 }
