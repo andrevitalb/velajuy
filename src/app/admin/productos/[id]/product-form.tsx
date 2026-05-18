@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useTransition } from "react"
+import { useEffect, useId, useState, useTransition } from "react"
 import { useRouter } from "next/navigation"
 import type { Route } from "next"
 import { toast } from "sonner"
@@ -9,9 +9,23 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { productFormSchema, type ProductFormInput } from "@/lib/admin/products/schema"
 import { createProduct, updateProduct, archiveProduct } from "@/lib/admin/products/actions"
 import { Button } from "@/components/ui/button"
+import { Field } from "@/components/admin/field"
 import { AttributePicker } from "./attribute-picker"
 
 type Attribute = { id: string; name: string; values: { id: string; name: string }[] }
+
+const FIELD_ORDER: (keyof ProductFormInput)[] = [
+	"name",
+	"slug",
+	"shortDescription",
+	"description",
+	"pricePesos",
+	"lowStockThreshold",
+	"skuCode",
+	"weightGrams",
+	"dianTaxRate",
+	"status",
+]
 
 export function ProductForm({
 	mode,
@@ -33,6 +47,26 @@ export function ProductForm({
 		defaultValues,
 	})
 
+	const errors = form.formState.errors
+	const submitCount = form.formState.submitCount
+
+	// IDs for fields so labels and error messages associate correctly.
+	const baseId = useId()
+	const id = (key: string) => `${baseId}-${key}`
+
+	// Focus-on-error: when validation produces errors after a submit, focus the
+	// first errored field in declared order.
+	useEffect(() => {
+		if (submitCount === 0) return
+		for (const key of FIELD_ORDER) {
+			if (errors[key]) {
+				document.getElementById(id(key))?.focus()
+				break
+			}
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [submitCount, errors])
+
 	function submit(data: ProductFormInput) {
 		startTransition(async () => {
 			try {
@@ -53,31 +87,39 @@ export function ProductForm({
 	}
 
 	return (
-		<form onSubmit={form.handleSubmit(submit)} className="space-y-6">
+		<form onSubmit={form.handleSubmit(submit)} className="space-y-6" noValidate>
 			<Section title="Información">
-				<Field label="Nombre" error={form.formState.errors.name?.message}>
+				<Field label="Nombre" htmlFor={id("name")} required error={errors.name?.message}>
 					<input
+						id={id("name")}
+						aria-invalid={errors.name ? true : undefined}
+						aria-describedby={errors.name ? `${id("name")}-error` : undefined}
 						{...form.register("name")}
-						className="w-full rounded-lg border border-velajuy-wine/20 px-3 py-2"
+						className={inputCls}
 					/>
 				</Field>
-				<Field label="Slug" error={form.formState.errors.slug?.message}>
+				<Field label="Slug" htmlFor={id("slug")} required error={errors.slug?.message}>
 					<input
+						id={id("slug")}
+						aria-invalid={errors.slug ? true : undefined}
+						aria-describedby={errors.slug ? `${id("slug")}-error` : undefined}
 						{...form.register("slug")}
-						className="w-full rounded-lg border border-velajuy-wine/20 px-3 py-2"
+						className={inputCls}
 					/>
 				</Field>
-				<Field label="Descripción corta">
+				<Field label="Descripción corta" htmlFor={id("shortDescription")}>
 					<input
+						id={id("shortDescription")}
 						{...form.register("shortDescription")}
-						className="w-full rounded-lg border border-velajuy-wine/20 px-3 py-2"
+						className={inputCls}
 					/>
 				</Field>
-				<Field label="Descripción">
+				<Field label="Descripción" htmlFor={id("description")}>
 					<textarea
+						id={id("description")}
 						{...form.register("description")}
 						rows={6}
-						className="w-full rounded-lg border border-velajuy-wine/20 px-3 py-2"
+						className={inputCls}
 					/>
 				</Field>
 			</Section>
@@ -85,51 +127,61 @@ export function ProductForm({
 			<Section title="Precio e inventario">
 				<Field
 					label="Precio (pesos COP, sin decimales)"
-					error={form.formState.errors.pricePesos?.message}
+					htmlFor={id("pricePesos")}
+					required
+					error={errors.pricePesos?.message}
 				>
 					<input
+						id={id("pricePesos")}
 						type="number"
 						min={0}
+						aria-invalid={errors.pricePesos ? true : undefined}
+						aria-describedby={errors.pricePesos ? `${id("pricePesos")}-error` : undefined}
 						{...form.register("pricePesos", { valueAsNumber: true })}
-						className="w-full rounded-lg border border-velajuy-wine/20 px-3 py-2"
+						className={inputCls}
 					/>
 				</Field>
-				<Field label="Umbral stock bajo" error={form.formState.errors.lowStockThreshold?.message}>
+				<Field
+					label="Umbral stock bajo"
+					htmlFor={id("lowStockThreshold")}
+					error={errors.lowStockThreshold?.message}
+				>
 					<input
+						id={id("lowStockThreshold")}
 						type="number"
 						min={0}
+						aria-invalid={errors.lowStockThreshold ? true : undefined}
+						aria-describedby={
+							errors.lowStockThreshold ? `${id("lowStockThreshold")}-error` : undefined
+						}
 						{...form.register("lowStockThreshold", { valueAsNumber: true })}
-						className="w-full rounded-lg border border-velajuy-wine/20 px-3 py-2"
+						className={inputCls}
 					/>
 				</Field>
-				<Field label="SKU">
-					<input
-						{...form.register("skuCode")}
-						className="w-full rounded-lg border border-velajuy-wine/20 px-3 py-2"
-					/>
+				<Field label="SKU" htmlFor={id("skuCode")}>
+					<input id={id("skuCode")} {...form.register("skuCode")} className={inputCls} />
 				</Field>
-				<Field label="Peso (g)">
+				<Field label="Peso (g)" htmlFor={id("weightGrams")}>
 					<input
+						id={id("weightGrams")}
 						type="number"
 						min={0}
 						{...form.register("weightGrams", { valueAsNumber: true })}
-						className="w-full rounded-lg border border-velajuy-wine/20 px-3 py-2"
+						className={inputCls}
 					/>
 				</Field>
-				<Field label="IVA (%)">
+				<Field label="IVA (%)" htmlFor={id("dianTaxRate")}>
 					<input
+						id={id("dianTaxRate")}
 						type="number"
 						min={0}
 						max={99}
 						{...form.register("dianTaxRate", { valueAsNumber: true })}
-						className="w-full rounded-lg border border-velajuy-wine/20 px-3 py-2"
+						className={inputCls}
 					/>
 				</Field>
-				<Field label="Estado">
-					<select
-						{...form.register("status")}
-						className="w-full rounded-lg border border-velajuy-wine/20 px-3 py-2"
-					>
+				<Field label="Estado" htmlFor={id("status")}>
+					<select id={id("status")} {...form.register("status")} className={inputCls}>
 						<option value="draft">Borrador</option>
 						<option value="active">Activo</option>
 						<option value="archived">Archivado</option>
@@ -149,9 +201,8 @@ export function ProductForm({
 				{mode === "edit" && productId && (
 					<Button
 						type="button"
-						variant="secondary"
+						variant="danger"
 						size="sm"
-						className="border-red-700 text-red-700 hover:bg-red-50"
 						onClick={() => {
 							if (!confirm("¿Archivar este producto?")) return
 							startTransition(async () => {
@@ -172,29 +223,13 @@ export function ProductForm({
 	)
 }
 
+const inputCls = "w-full rounded-lg border border-velajuy-wine/20 px-3 py-2"
+
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
 	return (
 		<section className="rounded-2xl border border-velajuy-wine/10 bg-white p-5">
 			<h2 className="mb-4 text-lg font-bold text-velajuy-wine">{title}</h2>
 			<div className="space-y-3">{children}</div>
 		</section>
-	)
-}
-
-function Field({
-	label,
-	error,
-	children,
-}: {
-	label: string
-	error?: string
-	children: React.ReactNode
-}) {
-	return (
-		<label className="block text-sm text-velajuy-wine">
-			<span className="mb-1 block font-medium">{label}</span>
-			{children}
-			{error && <span className="mt-1 block text-xs text-red-700">{error}</span>}
-		</label>
 	)
 }
