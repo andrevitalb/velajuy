@@ -5,8 +5,9 @@ import { useRouter, useSearchParams } from "next/navigation"
 export function Pagination({ total, perPage }: { total: number; perPage: number }) {
 	const params = useSearchParams()
 	const router = useRouter()
-	const page = Math.max(1, Number(params.get("page") ?? 1))
 	const lastPage = Math.max(1, Math.ceil(total / perPage))
+	const rawPage = Number(params.get("page") ?? 1) || 1
+	const page = Math.min(lastPage, Math.max(1, rawPage))
 	if (lastPage <= 1) return null
 
 	function goTo(p: number) {
