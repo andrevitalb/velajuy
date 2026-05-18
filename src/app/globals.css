@@ -100,9 +100,6 @@
 .animate-fade-in {
 	animation: velajuy-fade-in var(--duration-slow) var(--ease-out-soft) both;
 }
-.animate-scale-in {
-	animation: velajuy-scale-in var(--duration-slow) var(--ease-spring) both;
-}
 .animate-slide-up {
 	animation: velajuy-slide-up var(--duration-slow) var(--ease-out-soft) both;
 }

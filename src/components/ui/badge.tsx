@@ -1,7 +1,7 @@
-import { AlertCircle, CheckCircle2, CircleDashed, Clock, Info, XCircle } from "lucide-react"
+import { AlertCircle, CheckCircle2, CircleDashed, Info, XCircle } from "lucide-react"
 import { cn } from "@/lib/cn"
 
-export type BadgeTone = "neutral" | "info" | "success" | "warning" | "danger" | "pending"
+export type BadgeTone = "neutral" | "info" | "success" | "warning" | "danger"
 
 const TONE_STYLES: Record<
 	BadgeTone,
@@ -12,7 +12,6 @@ const TONE_STYLES: Record<
 	success: { bg: "bg-emerald-50", fg: "text-emerald-800", Icon: CheckCircle2 },
 	warning: { bg: "bg-amber-50", fg: "text-amber-900", Icon: AlertCircle },
 	danger: { bg: "bg-rose-50", fg: "text-rose-900", Icon: XCircle },
-	pending: { bg: "bg-velajuy-pink-soft", fg: "text-velajuy-wine", Icon: Clock },
 }
 
 export function Badge({

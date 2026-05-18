@@ -36,15 +36,6 @@ async function attachImages<T extends { primaryImageId: string | null }>(rows: T
 	}))
 }
 
-export async function listAdminProducts(filters: ProductFilters = {}) {
-	const rows = await db
-		.select(PRODUCT_COLUMNS)
-		.from(products)
-		.where(buildProductsWhere(filters))
-		.orderBy(desc(products.updatedAt))
-	return attachImages(rows)
-}
-
 export type ProductsSortField = "name" | "status" | "priceAmount" | "stockQuantity" | "updatedAt"
 
 const PRODUCTS_SORT_MAP = {

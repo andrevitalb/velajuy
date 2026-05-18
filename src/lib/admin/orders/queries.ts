@@ -20,15 +20,6 @@ function buildOrdersWhere(filters: OrderListFilters): SQL | undefined {
 	return where.length ? and(...where) : undefined
 }
 
-export async function listOrders(filters: OrderListFilters = {}, limit = 100) {
-	return db
-		.select()
-		.from(orders)
-		.where(buildOrdersWhere(filters))
-		.orderBy(desc(orders.placedAt))
-		.limit(limit)
-}
-
 export type OrdersSortField = "orderNumber" | "placedAt" | "status" | "totalAmount"
 
 const ORDERS_SORT_MAP = {
