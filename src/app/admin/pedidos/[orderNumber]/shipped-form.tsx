@@ -4,9 +4,17 @@ import { useState, useTransition } from "react"
 import { toast } from "sonner"
 import { markShipped } from "@/lib/admin/orders/actions"
 import { Button } from "@/components/ui/button"
+import { Modal } from "@/components/ui/modal"
+
+const COURIERS = ["inter", "servientrega", "envia"] as const
+type Courier = (typeof COURIERS)[number]
+
+function isCourier(v: string): v is Courier {
+	return (COURIERS as readonly string[]).includes(v)
+}
 
 export function ShippedForm({ orderId, onClose }: { orderId: string; onClose: () => void }) {
-	const [courier, setCourier] = useState<"inter" | "servientrega" | "envia">("inter")
+	const [courier, setCourier] = useState<Courier>("inter")
 	const [tracking, setTracking] = useState("")
 	const [pending, startTransition] = useTransition()
 
@@ -24,14 +32,17 @@ export function ShippedForm({ orderId, onClose }: { orderId: string; onClose: ()
 	}
 
 	return (
-		<div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
-			<form onSubmit={submit} className="w-full max-w-md rounded-2xl bg-white p-6">
+		<Modal label="Marcar enviado" onClose={onClose}>
+			<form onSubmit={submit}>
 				<h2 className="mb-4 text-xl font-bold text-velajuy-wine">Marcar enviado</h2>
 				<label className="block text-sm text-velajuy-wine">
 					Courier
 					<select
 						value={courier}
-						onChange={(e) => setCourier(e.target.value as typeof courier)}
+						onChange={(e) => {
+							const v = e.target.value
+							if (isCourier(v)) setCourier(v)
+						}}
 						className="mt-1 w-full rounded-lg border border-velajuy-wine/20 px-3 py-2"
 					>
 						<option value="inter">Inter Rapidísimo</option>
@@ -58,6 +69,6 @@ export function ShippedForm({ orderId, onClose }: { orderId: string; onClose: ()
 					</Button>
 				</div>
 			</form>
-		</div>
+		</Modal>
 	)
 }
