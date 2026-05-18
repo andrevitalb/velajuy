@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation"
+import type { Route } from "next"
 import { eq } from "drizzle-orm"
 import { PageHeader } from "@/components/admin/page-header"
 import { db } from "@/lib/db"
@@ -28,7 +29,14 @@ export default async function EditProductPage({ params }: { params: Promise<{ id
 
 	return (
 		<>
-			<PageHeader title={product.name} subtitle={`SKU ${product.skuCode ?? "—"}`} />
+			<PageHeader
+				title={product.name}
+				breadcrumb={[
+					{ href: "/admin/productos" as Route, label: "Productos" },
+					{ href: `/admin/productos/${product.id}` as Route, label: product.name },
+				]}
+				subtitle={`SKU ${product.skuCode ?? "—"}`}
+			/>
 			<ImageGallery
 				productId={product.id}
 				images={product.images.map((img) => ({

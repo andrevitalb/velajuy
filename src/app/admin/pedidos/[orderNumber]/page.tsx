@@ -38,6 +38,13 @@ export default async function OrderDetailPage({
 		<>
 			<PageHeader
 				title={`Pedido ${order.orderNumber}`}
+				breadcrumb={[
+					{ href: "/admin/pedidos" as Route, label: "Pedidos" },
+					{
+						href: `/admin/pedidos/${order.orderNumber}` as Route,
+						label: order.orderNumber,
+					},
+				]}
 				subtitle={format(new Date(order.placedAt), "d 'de' MMMM yyyy · HH:mm", { locale: es })}
 				actions={
 					<Link
