@@ -1,8 +1,15 @@
-import type { ReactNode } from "react"
+import { cloneElement, isValidElement, type ReactElement, type ReactNode } from "react"
+
+/**
+ * A custom header cell. Must render a single `<th>` element (e.g. the
+ * `SortableTh` component). DataTable renders it as-is without an outer `<th>`
+ * wrapper to avoid invalid `<th>` nesting.
+ */
+type HeaderCell = ReactElement<{ key?: string | number }>
 
 export type Column<T> = {
 	header: string
-	headerCell?: ReactNode
+	headerCell?: HeaderCell
 	cell: (row: T) => ReactNode
 	width?: string
 	align?: "left" | "right" | "center"
@@ -39,15 +46,8 @@ export function DataTable<T>({
 				<thead>
 					<tr className="border-b border-velajuy-wine/10 text-left text-xs uppercase tracking-wide text-velajuy-wine-soft">
 						{columns.map((c) =>
-							c.headerCell ? (
-								<th
-									key={c.header}
-									className={`px-4 py-3 ${c.align === "right" ? "text-right" : ""}`}
-									style={c.width ? { width: c.width } : undefined}
-									scope="col"
-								>
-									{c.headerCell}
-								</th>
+							c.headerCell && isValidElement(c.headerCell) ? (
+								cloneElement(c.headerCell, { key: c.header })
 							) : (
 								<th
 									key={c.header}

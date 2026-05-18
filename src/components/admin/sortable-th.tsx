@@ -43,7 +43,7 @@ export function SortableTh({
 	return (
 		<th
 			scope="col"
-			className={`${align === "right" ? "text-right" : ""} ${className ?? ""}`}
+			className={`px-4 py-3 ${align === "right" ? "text-right" : ""} ${className ?? ""}`}
 			aria-sort={!active ? "none" : dir === "asc" ? "ascending" : "descending"}
 		>
 			<button
