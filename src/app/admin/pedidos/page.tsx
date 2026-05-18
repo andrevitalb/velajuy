@@ -17,6 +17,15 @@ import { OrderFilters } from "./filters"
 
 const PER_PAGE = 20
 const ALLOWED_SORT: OrdersSortField[] = ["orderNumber", "placedAt", "status", "totalAmount"]
+const ALLOWED_STATUSES = new Set<NonNullable<OrderListFilters["status"]>>([
+	"pending_payment",
+	"paid",
+	"preparing",
+	"shipped",
+	"delivered",
+	"cancelled",
+	"failed",
+])
 
 export default async function OrdersListPage({
 	searchParams,
@@ -24,9 +33,10 @@ export default async function OrdersListPage({
 	searchParams: Promise<Record<string, string | string[] | undefined>>
 }) {
 	const params = await searchParams
+	const statusRaw = typeof params.status === "string" ? params.status : undefined
 	const status =
-		typeof params.status === "string"
-			? (params.status as NonNullable<OrderListFilters["status"]>)
+		statusRaw && ALLOWED_STATUSES.has(statusRaw as NonNullable<OrderListFilters["status"]>)
+			? (statusRaw as NonNullable<OrderListFilters["status"]>)
 			: undefined
 	const sortRaw = typeof params.sort === "string" ? params.sort : undefined
 	const sort = ALLOWED_SORT.includes(sortRaw as OrdersSortField)
