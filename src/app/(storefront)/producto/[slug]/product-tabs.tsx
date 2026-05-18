@@ -40,7 +40,7 @@ export function ProductTabs({ tabs }: { tabs: Tab[] }) {
 							onClick={() => setActive(t.key)}
 							onKeyDown={(e) => onKey(e, i)}
 							className={cn(
-								"-mb-px border-b-2 px-4 py-2 text-sm font-medium transition-colors duration-200",
+								"-mb-px border-b-2 px-4 py-2 text-sm font-medium transition-all duration-200 active:scale-95 active:opacity-90",
 								selected
 									? "border-velajuy-wine text-velajuy-wine"
 									: "border-transparent text-velajuy-wine-soft hover:text-velajuy-wine",

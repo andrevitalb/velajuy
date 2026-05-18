@@ -3,6 +3,7 @@
 import { useState, useTransition } from "react"
 import { toast } from "sonner"
 import { subscribeBackInStock } from "@/lib/back-in-stock/actions"
+import { Button } from "@/components/ui/button"
 
 export function BackInStockForm({
 	productId,
@@ -42,7 +43,7 @@ export function BackInStockForm({
 				<button
 					type="button"
 					onClick={() => setDone(false)}
-					className="text-sm underline"
+					className="text-sm underline transition-all duration-150 active:scale-95 active:opacity-90"
 				>
 					Usar otro correo
 				</button>
@@ -72,13 +73,9 @@ export function BackInStockForm({
 					aria-describedby={error ? "back-in-stock-email-error" : undefined}
 					className="flex-1 rounded-lg border border-velajuy-wine/20 bg-white px-3 py-2 text-sm text-velajuy-wine outline-none transition-colors duration-200 focus:border-velajuy-wine"
 				/>
-				<button
-					type="submit"
-					disabled={pending}
-					className="rounded-lg bg-velajuy-wine px-4 py-2 text-sm font-medium text-white disabled:opacity-60"
-				>
+				<Button type="submit" size="sm" pending={pending}>
 					{pending ? "Enviando…" : "Avísame"}
-				</button>
+				</Button>
 			</div>
 			{error && (
 				<p

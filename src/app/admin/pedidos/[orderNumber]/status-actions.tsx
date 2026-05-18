@@ -4,6 +4,7 @@ import { useState, useTransition } from "react"
 import { toast } from "sonner"
 import { cancelOrder, markCodPaid, markDelivered, markPreparing } from "@/lib/admin/orders/actions"
 import { nextStatus, type OrderStatus } from "@/lib/admin/orders/order-state"
+import { Button } from "@/components/ui/button"
 import { ShippedForm } from "./shipped-form"
 
 export function StatusActions({
@@ -38,57 +39,59 @@ export function StatusActions({
 	return (
 		<div className="flex flex-wrap gap-2">
 			{forward === "preparing" && (
-				<button
+				<Button
 					type="button"
-					disabled={pending}
+					size="sm"
+					pending={pending}
 					onClick={() => run("Marcado como preparando", () => markPreparing(orderId))}
-					className="rounded-lg bg-velajuy-wine px-3 py-2 text-sm font-medium text-white disabled:opacity-60"
 				>
 					Marcar preparando
-				</button>
+				</Button>
 			)}
 			{forward === "shipped" && (
-				<button
+				<Button
 					type="button"
+					size="sm"
 					disabled={pending}
 					onClick={() => setShowShipForm(true)}
-					className="rounded-lg bg-velajuy-wine px-3 py-2 text-sm font-medium text-white"
 				>
 					Marcar enviado
-				</button>
+				</Button>
 			)}
 			{forward === "delivered" && (
-				<button
+				<Button
 					type="button"
-					disabled={pending}
+					size="sm"
+					pending={pending}
 					onClick={() => run("Marcado como entregado", () => markDelivered(orderId))}
-					className="rounded-lg bg-velajuy-wine px-3 py-2 text-sm font-medium text-white disabled:opacity-60"
 				>
 					Marcar entregado
-				</button>
+				</Button>
 			)}
 			{codNeedsPaid && (
 				<button
 					type="button"
 					disabled={pending}
 					onClick={() => run("Pago COD confirmado", () => markCodPaid(orderId))}
-					className="rounded-lg bg-emerald-700 px-3 py-2 text-sm font-medium text-white disabled:opacity-60"
+					className="rounded-lg bg-emerald-700 px-3 py-2 text-sm font-medium text-white transition-all duration-150 active:scale-95 active:opacity-90 disabled:opacity-60"
 				>
 					Marcar pago recibido (COD)
 				</button>
 			)}
 			{canCancel && (
-				<button
+				<Button
 					type="button"
-					disabled={pending}
+					variant="secondary"
+					size="sm"
+					pending={pending}
 					onClick={() => {
 						if (!confirm("¿Cancelar este pedido?")) return
 						run("Pedido cancelado", () => cancelOrder(orderId, null))
 					}}
-					className="rounded-lg border border-red-700 px-3 py-2 text-sm font-medium text-red-700 disabled:opacity-60"
+					className="border-red-700 text-red-700 hover:bg-red-50"
 				>
 					Cancelar pedido
-				</button>
+				</Button>
 			)}
 			{showShipForm && <ShippedForm orderId={orderId} onClose={() => setShowShipForm(false)} />}
 		</div>

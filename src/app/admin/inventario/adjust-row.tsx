@@ -3,6 +3,7 @@
 import { useState, useTransition } from "react"
 import { toast } from "sonner"
 import { adjustStock } from "@/lib/admin/inventory/actions"
+import { Button } from "@/components/ui/button"
 
 export function AdjustRow({
 	productId,
@@ -70,14 +71,14 @@ export function AdjustRow({
 				/>
 			</td>
 			<td className="py-3">
-				<button
+				<Button
 					type="button"
+					size="sm"
 					onClick={submit}
 					disabled={pending || delta === 0}
-					className="rounded-lg bg-velajuy-wine px-3 py-1 text-sm font-medium text-white disabled:opacity-60"
 				>
 					Aplicar
-				</button>
+				</Button>
 			</td>
 		</tr>
 	)

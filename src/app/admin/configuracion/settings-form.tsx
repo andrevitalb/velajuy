@@ -5,6 +5,7 @@ import type { ReactNode } from "react"
 import { toast } from "sonner"
 import { updateSetting } from "@/lib/admin/settings/actions"
 import type { Notifications } from "@/lib/admin/settings/schema"
+import { Button } from "@/components/ui/button"
 
 type Defaults = {
 	shop_name: string
@@ -145,14 +146,9 @@ export function SettingsForm({ defaults }: { defaults: Defaults }) {
 					)
 				})}
 			</Section>
-			<button
-				type="button"
-				onClick={save}
-				disabled={pending}
-				className="rounded-lg bg-velajuy-wine px-4 py-2 text-sm font-medium text-white disabled:opacity-60"
-			>
+			<Button type="button" size="sm" pending={pending} onClick={save}>
 				{pending ? "Guardando…" : "Guardar configuración"}
-			</button>
+			</Button>
 		</div>
 	)
 }

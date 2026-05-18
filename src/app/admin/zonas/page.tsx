@@ -3,6 +3,7 @@
 import { useState, useEffect, useTransition } from "react"
 import { toast } from "sonner"
 import { PageHeader } from "@/components/admin/page-header"
+import { Button } from "@/components/ui/button"
 import { deactivateZone } from "@/lib/admin/zones/actions"
 import { ZoneForm } from "./zone-form"
 
@@ -44,13 +45,9 @@ export default function ZonesPage() {
 			<PageHeader
 				title="Zonas de envío"
 				actions={
-					<button
-						type="button"
-						onClick={() => setShowCreate(true)}
-						className="rounded-lg bg-velajuy-wine px-3 py-2 text-sm font-medium text-white"
-					>
+					<Button type="button" size="sm" onClick={() => setShowCreate(true)}>
 						Nueva zona
-					</button>
+					</Button>
 				}
 			/>
 			<ul className="space-y-2">
@@ -70,13 +67,19 @@ export default function ZonesPage() {
 								</p>
 							</div>
 							<div className="flex gap-2">
-								<button
+								<Button
+									type="button"
+									variant="secondary"
+									size="sm"
 									onClick={() => setEditing(z)}
-									className="rounded-lg border border-velajuy-wine/20 px-3 py-1 text-sm text-velajuy-wine"
 								>
 									Editar
-								</button>
-								<button
+								</Button>
+								<Button
+									type="button"
+									variant="secondary"
+									size="sm"
+									disabled={pending}
 									onClick={() => {
 										if (!confirm("¿Desactivar esta zona?")) return
 										startTransition(async () => {
@@ -85,11 +88,10 @@ export default function ZonesPage() {
 											refresh()
 										})
 									}}
-									disabled={pending}
-									className="rounded-lg border border-red-700 px-3 py-1 text-sm text-red-700 disabled:opacity-60"
+									className="border-red-700 text-red-700 hover:bg-red-50"
 								>
 									Desactivar
-								</button>
+								</Button>
 							</div>
 						</div>
 						{editing?.id === z.id && (

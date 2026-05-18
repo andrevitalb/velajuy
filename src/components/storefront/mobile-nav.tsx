@@ -83,7 +83,7 @@ export function MobileNav() {
 				aria-expanded={open}
 				aria-controls="mobile-nav-panel"
 				onClick={() => setOpen(true)}
-				className="inline-flex size-11 items-center justify-center rounded-md text-velajuy-wine md:hidden"
+				className="inline-flex size-11 items-center justify-center rounded-md text-velajuy-wine transition-all duration-150 active:scale-95 active:opacity-90 md:hidden"
 			>
 				<Menu className="size-6" />
 			</button>
@@ -103,7 +103,7 @@ export function MobileNav() {
 							type="button"
 							aria-label="Cerrar menú"
 							onClick={() => setOpen(false)}
-							className="inline-flex size-11 items-center justify-center rounded-md text-velajuy-wine"
+							className="inline-flex size-11 items-center justify-center rounded-md text-velajuy-wine transition-all duration-150 active:scale-95 active:opacity-90"
 						>
 							<X className="size-6" />
 						</button>

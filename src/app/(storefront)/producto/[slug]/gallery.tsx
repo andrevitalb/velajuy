@@ -62,7 +62,7 @@ export function ProductGallery({
 								aria-pressed={i === active}
 								onClick={() => setActive(i)}
 								className={cn(
-									"relative h-16 w-16 shrink-0 overflow-hidden rounded-lg transition-all duration-200",
+									"relative h-16 w-16 shrink-0 overflow-hidden rounded-lg transition-all duration-200 active:scale-95",
 									i === active
 										? "ring-2 ring-velajuy-wine ring-offset-2"
 										: "ring-1 ring-velajuy-wine/15 opacity-70 hover:opacity-100",

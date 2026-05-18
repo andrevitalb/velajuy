@@ -38,7 +38,7 @@ export function Sheet({
 						type="button"
 						onClick={onClose}
 						aria-label="Cerrar"
-						className="inline-flex size-11 items-center justify-center rounded-full text-velajuy-wine hover:bg-velajuy-pink-soft"
+						className="inline-flex size-11 items-center justify-center rounded-full text-velajuy-wine transition-all duration-150 hover:bg-velajuy-pink-soft active:scale-95 active:opacity-90"
 					>
 						<X className="size-5" />
 					</button>

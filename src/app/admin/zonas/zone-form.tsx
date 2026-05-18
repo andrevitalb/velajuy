@@ -3,6 +3,7 @@
 import { useState, useTransition } from "react"
 import { toast } from "sonner"
 import { createZone, updateZone, type ZoneInput } from "@/lib/admin/zones/actions"
+import { Button } from "@/components/ui/button"
 
 type Mode = { kind: "create" } | { kind: "edit"; id: string }
 
@@ -114,13 +115,9 @@ export function ZoneForm({
 				Activa
 			</label>
 			<div className="sm:col-span-2">
-				<button
-					type="submit"
-					disabled={pending}
-					className="rounded-lg bg-velajuy-wine px-4 py-2 text-sm font-medium text-white disabled:opacity-60"
-				>
+				<Button type="submit" size="sm" pending={pending}>
 					{pending ? "Guardando…" : "Guardar"}
-				</button>
+				</Button>
 			</div>
 		</form>
 	)

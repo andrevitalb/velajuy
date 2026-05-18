@@ -3,6 +3,7 @@
 import { useState, useTransition } from "react"
 import { toast } from "sonner"
 import { markShipped } from "@/lib/admin/orders/actions"
+import { Button } from "@/components/ui/button"
 
 export function ShippedForm({ orderId, onClose }: { orderId: string; onClose: () => void }) {
 	const [courier, setCourier] = useState<"inter" | "servientrega" | "envia">("inter")
@@ -49,20 +50,12 @@ export function ShippedForm({ orderId, onClose }: { orderId: string; onClose: ()
 					/>
 				</label>
 				<div className="mt-6 flex justify-end gap-2">
-					<button
-						type="button"
-						onClick={onClose}
-						className="rounded-lg px-3 py-2 text-sm text-velajuy-wine"
-					>
+					<Button type="button" variant="ghost" size="sm" onClick={onClose}>
 						Cancelar
-					</button>
-					<button
-						type="submit"
-						disabled={pending}
-						className="rounded-lg bg-velajuy-wine px-3 py-2 text-sm font-medium text-white disabled:opacity-60"
-					>
+					</Button>
+					<Button type="submit" size="sm" pending={pending}>
 						{pending ? "Enviando…" : "Confirmar envío"}
-					</button>
+					</Button>
 				</div>
 			</form>
 		</div>

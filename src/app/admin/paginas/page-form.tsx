@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation"
 import type { Route } from "next"
 import { toast } from "sonner"
 import { createPage, updatePage } from "@/lib/admin/pages/actions"
+import { Button } from "@/components/ui/button"
 
 type FormState = {
 	slug: string
@@ -90,13 +91,9 @@ export function PageForm({
 				/>
 				Publicada
 			</label>
-			<button
-				type="submit"
-				disabled={pending}
-				className="rounded-lg bg-velajuy-wine px-4 py-2 text-sm font-medium text-white disabled:opacity-60"
-			>
+			<Button type="submit" size="sm" pending={pending}>
 				{pending ? "Guardando…" : "Guardar"}
-			</button>
+			</Button>
 		</form>
 	)
 }

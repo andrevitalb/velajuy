@@ -4,6 +4,7 @@ import { useState } from "react"
 import { useSearchParams } from "next/navigation"
 import { signIn } from "@/lib/auth-client"
 import { safeRedirect } from "@/lib/safe-redirect"
+import { Button } from "@/components/ui/button"
 
 export function IngresarForm() {
 	const search = useSearchParams()
@@ -67,13 +68,14 @@ export function IngresarForm() {
 							</p>
 						)}
 					</div>
-					<button
+					<Button
 						type="submit"
-						disabled={status === "loading"}
-						className="w-full rounded-xl bg-velajuy-wine px-4 py-3 font-medium text-white disabled:opacity-60"
+						size="lg"
+						pending={status === "loading"}
+						className="w-full"
 					>
 						{status === "loading" ? "Enviando…" : "Enviar enlace"}
-					</button>
+					</Button>
 				</form>
 			)}
 		</main>

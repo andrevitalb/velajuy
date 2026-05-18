@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { productFormSchema, type ProductFormInput } from "@/lib/admin/products/schema"
 import { createProduct, updateProduct, archiveProduct } from "@/lib/admin/products/actions"
+import { Button } from "@/components/ui/button"
 import { AttributePicker } from "./attribute-picker"
 
 type Attribute = { id: string; name: string; values: { id: string; name: string }[] }
@@ -146,8 +147,11 @@ export function ProductForm({
 
 			<div className="flex justify-between gap-2">
 				{mode === "edit" && productId && (
-					<button
+					<Button
 						type="button"
+						variant="secondary"
+						size="sm"
+						className="border-red-700 text-red-700 hover:bg-red-50"
 						onClick={() => {
 							if (!confirm("¿Archivar este producto?")) return
 							startTransition(async () => {
@@ -156,18 +160,13 @@ export function ProductForm({
 								router.push("/admin/productos" as Route)
 							})
 						}}
-						className="rounded-lg border border-red-700 px-3 py-2 text-sm text-red-700"
 					>
 						Archivar
-					</button>
+					</Button>
 				)}
-				<button
-					type="submit"
-					disabled={pending}
-					className="ml-auto rounded-lg bg-velajuy-wine px-4 py-2 text-sm font-medium text-white disabled:opacity-60"
-				>
+				<Button type="submit" size="sm" pending={pending} className="ml-auto">
 					{pending ? "Guardando…" : "Guardar"}
-				</button>
+				</Button>
 			</div>
 		</form>
 	)
