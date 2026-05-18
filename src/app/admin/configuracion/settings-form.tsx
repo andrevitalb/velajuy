@@ -1,11 +1,12 @@
 "use client"
 
-import { useState, useTransition } from "react"
+import { useId, useState, useTransition } from "react"
 import type { ReactNode } from "react"
 import { toast } from "sonner"
 import { updateSetting } from "@/lib/admin/settings/actions"
 import type { Notifications } from "@/lib/admin/settings/schema"
 import { Button } from "@/components/ui/button"
+import { Field } from "@/components/admin/field"
 
 type Defaults = {
 	shop_name: string
@@ -61,6 +62,7 @@ export function SettingsForm({ defaults }: { defaults: Defaults }) {
 					label="Email de contacto"
 					value={state.contact_email}
 					onChange={(v) => setState({ ...state, contact_email: v })}
+					type="email"
 				/>
 				<T
 					label="Teléfono"
@@ -112,6 +114,7 @@ export function SettingsForm({ defaults }: { defaults: Defaults }) {
 								{label}
 							</label>
 							<select
+								aria-label={`Frecuencia para ${label}`}
 								value={cfg.frequency}
 								onChange={(e) =>
 									setState({
@@ -129,6 +132,7 @@ export function SettingsForm({ defaults }: { defaults: Defaults }) {
 								<option value="off">Apagado</option>
 							</select>
 							<input
+								aria-label={`Email destino para ${label}`}
 								placeholder="Email destino (opcional)"
 								value={cfg.email ?? ""}
 								onChange={(e) =>
@@ -166,20 +170,24 @@ function T({
 	label,
 	value,
 	onChange,
+	type,
 }: {
 	label: string
 	value: string
 	onChange: (v: string) => void
+	type?: string
 }) {
+	const id = useId()
 	return (
-		<label className="block text-sm text-velajuy-wine">
-			<span className="mb-1 block font-medium">{label}</span>
+		<Field label={label} htmlFor={id}>
 			<input
+				id={id}
+				type={type}
 				value={value}
 				onChange={(e) => onChange(e.target.value)}
 				className="w-full rounded-lg border border-velajuy-wine/20 px-3 py-2"
 			/>
-		</label>
+		</Field>
 	)
 }
 
@@ -192,16 +200,17 @@ function N({
 	value: number
 	onChange: (v: number) => void
 }) {
+	const id = useId()
 	return (
-		<label className="block text-sm text-velajuy-wine">
-			<span className="mb-1 block font-medium">{label}</span>
+		<Field label={label} htmlFor={id}>
 			<input
+				id={id}
 				type="number"
 				min={0}
 				value={value}
 				onChange={(e) => onChange(parseInt(e.target.value, 10) || 0)}
 				className="w-full rounded-lg border border-velajuy-wine/20 px-3 py-2"
 			/>
-		</label>
+		</Field>
 	)
 }
