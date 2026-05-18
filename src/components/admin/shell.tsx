@@ -14,9 +14,9 @@ export async function AdminShell({ children }: { children: React.ReactNode }) {
 	const displayName = name ?? email
 
 	return (
-		<div className="flex min-h-screen bg-white">
+		<div className="flex min-h-dvh bg-white">
 			<AdminSidebar role={role} />
-			<div className="flex flex-1 flex-col">
+			<div className="flex min-w-0 flex-1 flex-col">
 				<header className="flex items-center justify-between gap-4 border-b border-velajuy-wine/10 bg-velajuy-cream px-4 py-3 md:hidden print:hidden">
 					<Link href={"/admin" as Route} className="text-base font-bold text-velajuy-wine">
 						Velajuy · Admin
@@ -35,7 +35,7 @@ export async function AdminShell({ children }: { children: React.ReactNode }) {
 				<main
 					id="main"
 					tabIndex={-1}
-					className="flex-1 p-4 pb-24 outline-none md:p-8 md:pb-8"
+					className="min-w-0 flex-1 p-4 pb-24 outline-none md:p-8 md:pb-8"
 				>
 					{children}
 				</main>

@@ -52,7 +52,7 @@ export function DataTable<T>({
 								<th
 									key={c.header}
 									scope="col"
-									className={`px-4 py-3 ${c.align === "right" ? "text-right" : ""}`}
+									className={`px-3 py-3 sm:px-4 ${c.align === "right" ? "text-right" : ""}`}
 									style={c.width ? { width: c.width } : undefined}
 								>
 									{c.header}
@@ -67,7 +67,7 @@ export function DataTable<T>({
 							{columns.map((c) => (
 								<td
 									key={c.header}
-									className={`px-4 py-3 align-middle text-sm text-velajuy-wine ${c.align === "right" ? "text-right tabular-nums" : ""}`}
+									className={`px-3 py-3 align-middle text-sm text-velajuy-wine sm:px-4 ${c.align === "right" ? "text-right tabular-nums" : ""}`}
 								>
 									{c.cell(r)}
 								</td>

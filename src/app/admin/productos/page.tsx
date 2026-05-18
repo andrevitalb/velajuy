@@ -50,26 +50,28 @@ export default async function ProductsListPage({
 			header: "Producto",
 			headerCell: <SortableTh field="name" label="Producto" />,
 			cell: (r) => (
-				<div className="flex items-center gap-3">
+				<div className="flex min-w-0 items-center gap-3">
 					{r.primaryImageUrl ? (
 						<Image
 							src={r.primaryImageUrl}
 							alt={r.name}
-							width={48}
-							height={48}
-							className="rounded-lg object-cover"
+							width={40}
+							height={40}
+							className="size-10 shrink-0 rounded-lg object-cover sm:size-12"
 						/>
 					) : (
-						<div className="size-12 rounded-lg bg-velajuy-pink-soft" />
+						<div className="size-10 shrink-0 rounded-lg bg-velajuy-pink-soft sm:size-12" />
 					)}
-					<div>
+					<div className="min-w-0">
 						<Link
 							href={`/admin/productos/${r.id}` as Route}
-							className="font-medium text-velajuy-wine underline"
+							className="line-clamp-2 font-medium text-velajuy-wine underline sm:line-clamp-1"
 						>
 							{r.name}
 						</Link>
-						<p className="text-xs text-velajuy-wine-soft">{r.skuCode ?? "—"}</p>
+						<p className="hidden truncate text-xs text-velajuy-wine-soft sm:block">
+							{r.skuCode ?? "—"}
+						</p>
 					</div>
 				</div>
 			),
