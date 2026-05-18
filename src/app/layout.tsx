@@ -14,7 +14,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 			<body className="bg-velajuy-pink-soft text-velajuy-wine antialiased">
 				<SkipLink />
 				{children}
-				<Toaster richColors position="top-center" />
+				<Toaster
+					richColors
+					position="top-center"
+					duration={4000}
+					toastOptions={{
+						classNames: {
+							toast:
+								"rounded-xl border border-velajuy-wine/10 bg-velajuy-cream text-velajuy-wine",
+							title: "text-sm font-medium",
+							description: "text-xs text-velajuy-wine-soft",
+						},
+					}}
+				/>
 			</body>
 		</html>
 	)
