@@ -24,8 +24,7 @@ export function SortableTh({
 	const params = useSearchParams()
 	const sort = params.get("sort")
 	const dirParam = params.get("dir")
-	const dir: "asc" | "desc" =
-		dirParam === "asc" ? "asc" : dirParam === "desc" ? "desc" : defaultDir
+	const dir: "asc" | "desc" = dirParam === "asc" ? "asc" : dirParam === "desc" ? "desc" : defaultDir
 	const active = sort === field
 
 	function toggle() {

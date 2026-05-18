@@ -10,15 +10,5 @@ test("can reach main content via skip link", async ({ page }) => {
 	expect(mainId).toBe("main")
 })
 
-test("modal close returns focus to trigger", async ({ page }) => {
-	await page.goto("/catalogo")
-	const trigger = page.getByRole("link", { name: /vista rápida/i }).first()
-	if (await trigger.count()) {
-		await trigger.focus()
-		await trigger.click()
-		await page.keyboard.press("Escape")
-		// After ESC, focus should be back somewhere reasonable; non-null check is enough for smoke.
-		const focused = await page.evaluate(() => !!document.activeElement)
-		expect(focused).toBe(true)
-	}
-})
+// Modal focus restoration is covered by tests/unit/modal.test.tsx, which can
+// reliably mount/unmount the component without depending on storefront markup.
